@@ -1,0 +1,11 @@
+Package: grocerycart
+Title: Collect Grocery Data
+Version: 0.0.0.9000
+Authors@R: 
+    person("Mo", "Amiri", , "moamiristat@protonmail.com", role = c("aut", "cre"))
+Description: Scraper functions to collect data from 2 online grocery services, 
+    and helper functions to analyze data.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
