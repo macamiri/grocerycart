@@ -7,7 +7,8 @@
 #' In order to play nice with the website, the scraper functions have
 #' a built in 'sleep functionality'. This means that the functions will
 #' suspend execution (i.e., go to sleep) for a random time interval, usually
-#' less than 11 seconds whenever the sleep function, \emph{nytnyt}, is called.
+#' less than 11 seconds whenever the sleep function, \emph{nytnyt}, is
+#' called. See the \emph{vignette} for more information.
 #'
 #' These functions are verbose, allowing the user to get a sense of progress.
 #'
@@ -102,7 +103,7 @@ oc_collect_product_general <- function(remDr = remDr,
                                        url = "https://www.ocado.com") {
 
   links_to_use %>%
-    purrr::map_dfr(., function(.x) {
+    purrr::map_dfr(.data, function(.x) {
 
       # Navigate to page
       remDr$navigate(.x)
@@ -123,11 +124,11 @@ oc_collect_product_general <- function(remDr = remDr,
                        "Total products:", oc_category_count, "\n"))
 
       # Click on 'show more' until there's no more 'show more'
-      grocerycart::click_show_more()
+      grocerycart::click_show_more(remDr = remDr)
 
       # Slowly scroll down then up to load all products
-      grocerycart::scroll_down_page_perc(remDr)
-      grocerycart::scroll_up_page_perc(remDr)
+      grocerycart::scroll_down_page_perc(remDr = remDr)
+      grocerycart::scroll_up_page_perc(remDr = remDr)
 
       # Grab title
       product_title <-
@@ -135,7 +136,7 @@ oc_collect_product_general <- function(remDr = remDr,
                                        css = "h4.fop-title",
                                        type = "attribute",
                                        attribute_selector = "title") %>%
-        .[-c(1:3)]
+        .data[-c(1:3)]
 
       grocerycart::nytnyt(c(6, 11), crayon_col = crayon::yellow, "Got titles\n")
 
@@ -143,7 +144,7 @@ oc_collect_product_general <- function(remDr = remDr,
       product_weight <-
         grocerycart::get_html_elements(remDr,
                                        css = ".fop-catch-weight") %>%
-        .[-c(1:3)]
+        .data[-c(1:3)]
 
       grocerycart::nytnyt(c(6, 11), crayon_col = crayon::cyan, "Got weights\n")
 
@@ -151,7 +152,7 @@ oc_collect_product_general <- function(remDr = remDr,
       product_price <-
         grocerycart::get_html_elements(remDr,
                                        css = ".fop-price") %>%
-        .[-c(1:3)]
+        .data[-c(1:3)]
 
       grocerycart::nytnyt(c(6, 11), crayon_col = crayon::silver, "Got prices\n")
 
@@ -160,7 +161,7 @@ oc_collect_product_general <- function(remDr = remDr,
         grocerycart::get_html_elements(remDr,
                                        css = ".fop-pack-info") %>%
         dplyr::na_if("") %>%
-        .[-c(1:3)]
+        .data[-c(1:3)]
 
       # Grab images
       product_images <-
@@ -168,8 +169,8 @@ oc_collect_product_general <- function(remDr = remDr,
                                        css = "img.fop-img",
                                        type = "attribute",
                                        attribute_selector = "src") %>%
-        paste0(url, .) %>%
-        .[-c(1:3)]
+        paste0(url, .data) %>%
+        .data[-c(1:3)]
 
       grocerycart::nytnyt(c(6, 11), crayon_col = crayon::blue, "Got images\n")
 
@@ -179,7 +180,7 @@ oc_collect_product_general <- function(remDr = remDr,
                                        css = "li.fops-item > div:nth-child(2) > div:nth-child(1) > a:nth-child(1)",
                                        type = "attribute",
                                        attribute_selector = "href") %>%
-        paste0(url, .)
+        paste0(url, .data)
 
       grocerycart::nytnyt(c(6, 11), crayon_col = crayon::green, "Got product links\n")
 
@@ -233,7 +234,7 @@ oc_collect_product_extra <- function(remDr = remDr,
                                      sleep_min = 0, sleep_max = 1) {
 
   links_to_use %>%
-    purrr::map_dfr(., function(.x) {
+    purrr::map_dfr(.data, function(.x) {
       # Navigate to page
       remDr$navigate(.x)
       grocerycart::nytnyt(c(3, 5), crayon_col = crayon::blue, "Make sure page loads \n")
@@ -248,7 +249,7 @@ oc_collect_product_extra <- function(remDr = remDr,
                                        css = ".bop-badges > img",
                                        type = "attribute",
                                        attribute_selector = "title") %>%
-        paste(., sep = ", ", collapse = ", ") %>%
+        paste(.data, sep = ", ", collapse = ", ") %>%
         grocerycart::empty_to_na()
       cat(crayon::yellow("Got badges\n"))
 
@@ -277,7 +278,7 @@ oc_collect_product_extra <- function(remDr = remDr,
         stringr::str_extract("(?<=Country of Origin).{100}") %>%
         stringr::str_extract(country_names) %>%
         purrr::keep(.p = ~ !is.na(.)) %>%
-        paste(., sep = ", ", collapse = ", ") %>%
+        paste(.data, sep = ", ", collapse = ", ") %>%
         grocerycart::empty_to_na()
       cat(crayon::yellow("Got country of origin\n"))
 
@@ -350,7 +351,7 @@ oc_collect_product_reviews <- function(remDr = remDr,
                                        sleep_min = 0, sleep_max = 1) {
 
   links_to_use %>%
-    purrr::map_dfr(., function(.x) {
+    purrr::map_dfr(.data, function(.x) {
 
       # Navigate to page
       remDr$navigate(.x)
@@ -372,12 +373,12 @@ oc_collect_product_reviews <- function(remDr = remDr,
           product_reviews <-
             grocerycart::get_html_elements(remDr,
                                            css = ".bop-reviews__review > p") %>%
-            tibble::tibble(reviews = .)
+            tibble::tibble(reviews = .data)
         } else {
           num_page_reviews <-
             grocerycart::get_html_elements(remDr,
                                            css = ".bop-reviews__paginationText") %>%
-            .[[1]] %>%
+            .data[[1]] %>%
             readr::parse_number()
 
           cat(crayon::silver(num_page_reviews, " pages of reviews for this product \n"))
@@ -385,7 +386,7 @@ oc_collect_product_reviews <- function(remDr = remDr,
           product_review_p1 <-
             grocerycart::get_html_elements(remDr,
                                            css = ".bop-reviews__review > p") %>%
-            tibble::tibble(reviews = .)
+            tibble::tibble(reviews = .data)
 
           if(num_page_reviews > 1) {
             first_right_button <- remDr$findElement(using = "css",
@@ -398,7 +399,7 @@ oc_collect_product_reviews <- function(remDr = remDr,
             product_review_p2 <-
               grocerycart::get_html_elements(remDr,
                                              css = ".bop-reviews__review > p") %>%
-              tibble::tibble(reviews = .)
+              tibble::tibble(reviews = .data)
 
             if(num_page_reviews > 2) {
               product_reviews <-
@@ -422,7 +423,7 @@ oc_collect_product_reviews <- function(remDr = remDr,
 
                                  tibble::tibble(reviews = product_review_ps)
                                  }) %>%
-                dplyr::bind_rows(product_review_p1, product_review_p2, .)
+                dplyr::bind_rows(product_review_p1, product_review_p2, .data)
               } else {
                 product_reviews <- dplyr::bind_rows(product_review_p1, product_review_p2)
               }
@@ -469,7 +470,7 @@ oc_collect_nutrition_table <- function(remDr = remDr,
                                        sleep_min = 0, sleep_max = 1) {
 
   links_to_use %>%
-    purrr::map(., function(.x) {
+    purrr::map(.data, function(.x) {
       # Navigate to page
       remDr$navigate(.x)
       grocerycart::nytnyt(c(3, 5), crayon_col = crayon::blue, "Make sure page loads \n")
