@@ -29,24 +29,26 @@
 #' remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 #' browser = "firefox", verbose = FALSE)$client
 #'
-#' # Collect all location links
-#' grocer_location <- eg_collect_location_links(remDr = remDr, url = "https://www.elgrocer.com")
+#' # (A) Collect all location links
+#' eg_location <- eg_collect_location_links(remDr = remDr, url = "https://www.elgrocer.com")
 #'
-#' # Collect store details from 5 locations
-#' grocer_store <- eg_collect_stores_details(remDr, grocer_location$location_link[1:5])
+#' # (B) Collect store details from 5 locations
+#' eg_store <- eg_collect_stores_details(remDr, eg_location$location_link[1:5])
 #'
-#' # Collect categories from 3 stores
-#' grocer_category <- eg_collect_categories(remDr, grocer_store$store_link[1:3])
+#' # (C) Collect categories from 3 stores
+#' eg_category <- eg_collect_categories(remDr, eg_store$store_link[1:3])
 #'
-#' # Collect subcategories from 3 categories
-#' random_category_links <- sample(1:length(grocer_category$category_link),
+#' # (D) Collect subcategories from 3 categories
+#' random_category_links <- sample(1:length(eg_category$category_link),
 #' 3, replace = FALSE)
-#' grocer_subcategory <- eg_collect_subcategories(grocer_category$category_link[random_category_links])
+#' eg_subcategory <- eg_collect_subcategories(remDr,
+#' eg_category$category_link[random_category_links])
 #'
 #' # Collect product data from 2 subcategories
-#' random_subcategory_links <- sample(1:length(grocer_subcategory$subcategory_link),
+#' random_subcategory_links <- sample(1:length(eg_subcategory$subcategory_link),
 #' 2, replace = FALSE)
-#' grocer_item <- eg_collect_items(grocer_subcategory$subcategory_link[random_subcategory_links])
+#' eg_item <- eg_collect_items(remDr,
+#' eg_subcategory$subcategory_link[random_subcategory_links])
 #'
 #' # Close the server
 #' remDr$close()
@@ -123,7 +125,7 @@ eg_collect_stores_details <- function(remDr = remDr,
       num_of_stores_selenium <- length(rem_store_info)
 
       # Verify that all stores' 'i' icon was clicked
-      grocerycart::verify_grocer_length_match(num_of_stores_selenium, num_of_stores_rvest)
+      grocerycart::verify_eg_length_match(num_of_stores_selenium, num_of_stores_rvest)
 
       # Collect the extra 'i' icon data
       store_details <- grocerycart::get_html_elements(remDr, css = ".store-detail")
@@ -208,7 +210,7 @@ eg_collect_categories <- function(remDr = remDr,
       category_links <- paste0(url, category_link_ext)
 
       # Verify that every category's link was collected
-      grocerycart::verify_grocer_length_match(num_of_categories,
+      grocerycart::verify_eg_length_match(num_of_categories,
                                               if(category_links == url) {
                                                 0
                                                 } else {
@@ -268,7 +270,7 @@ eg_collect_subcategories <- function(remDr = remDr,
 
       # Grab subcategory links /{all}
       num_of_categories_tibble <-
-        grocer_category %>%
+        eg_category %>%
         dplyr::count(.data$store_name)
 
 
@@ -300,7 +302,7 @@ eg_collect_subcategories <- function(remDr = remDr,
           num_of_subcategories <- length(store_subcategories)
 
           # Verify that every subcategory's link was collected
-          grocerycart::verify_grocer_length_match(num_of_subcategories,
+          grocerycart::verify_eg_length_match(num_of_subcategories,
                                                   if(subcategory_links == url) {
                                                     0
                                                   } else {
@@ -339,7 +341,7 @@ eg_collect_subcategories <- function(remDr = remDr,
 #'
 #' @return \code{*_items}: Tibble with product details
 #' @export
-eg_collect_items <- function(remDr,
+eg_collect_items <- function(remDr = remDr,
                              links_to_use,
                              sleep_min = 0, sleep_max = 1) {
 
