@@ -9,7 +9,7 @@
 #' x <- "this is text"
 #' empty_to_na(x)
 #'
-#' y <- " "
+#' y <- ""
 #' empty_to_na(y)
 #'
 #' z <- NULL
