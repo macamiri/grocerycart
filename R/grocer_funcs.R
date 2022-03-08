@@ -1,12 +1,29 @@
 #' Collect elgrocer data
 #'
+#' The 5 \code{eg_collect_*} functions chronologically scrape the
+#' \emph{elgrocer} website and return the data indicated by each function name.
+#'
+#' @section Note:
+#' In order to play nice with the website, the scraper functions have
+#' a built in 'sleep functionality'. This means that the functions will
+#' suspend execution (i.e., go to sleep) for a random time interval, usually
+#' less than 11 seconds whenever the sleep function, \emph{nytnyt}, is called.
+#'
+#' These functions are verbose, allowing the user to get a sense of progress.
+#'
+#' @seealso
+#' \code{\link{oc_collect_categories}} for elgrocer data collection.
+#' \code{\link{nytnyt}} for sleep functionality.
+#'
 #' @param remDr Remote client driver
 #' @param url elgrocer url
 #'
-#' @return Tibble with the URL for each location
+#' @return \code{*_location_links}:Tibble with the URL for each location
+#'
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Initiate server
 #' remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 #' browser = "firefox", verbose = FALSE)$client
@@ -34,6 +51,7 @@
 #' remDr$close()
 #' gc(remDr)
 #' rm(remDr)
+#' }
 eg_collect_location_links <- function(remDr = remDr,
                                       url = "https://www.elgrocer.com") {
   # Navigate to homepage
@@ -66,7 +84,7 @@ eg_collect_location_links <- function(remDr = remDr,
 #' @param sleep_min Minimum time to suspend executing R expressions
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
-#' @return Tibble with store links
+#' @return \code{*_store_details}: Tibble with store links
 #' @export
 eg_collect_stores_details <- function(remDr = remDr,
                                       links_to_use,
@@ -141,7 +159,7 @@ eg_collect_stores_details <- function(remDr = remDr,
 #' @param sleep_min Minimum time to suspend executing R expressions
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
-#' @return Tibble with category links
+#' @return \code{*_categories}: Tibble with category links
 #' @export
 eg_collect_categories <- function(remDr = remDr,
                                   links_to_use,
@@ -225,7 +243,7 @@ eg_collect_categories <- function(remDr = remDr,
 #' @param sleep_min Minimum time to suspend executing R expressions
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
-#' @return Tibble with subcategory links
+#' @return \code{*_subcategories}: Tibble with subcategory links
 #'
 #' @importFrom rlang .data
 #'
@@ -316,7 +334,7 @@ eg_collect_subcategories <- function(remDr = remDr,
 #' @param sleep_min Minimum time to suspend executing R expressions
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
-#' @return Tibble with product details
+#' @return \code{*_items}: Tibble with product details
 #' @export
 eg_collect_items <- function(remDr,
                              links_to_use,
