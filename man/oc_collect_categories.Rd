@@ -70,7 +70,8 @@ and return the data indicated by each function name.
 In order to play nice with the website, the scraper functions have
 a built in 'sleep functionality'. This means that the functions will
 suspend execution (i.e., go to sleep) for a random time interval, usually
-less than 11 seconds whenever the sleep function, \emph{nytnyt}, is called.
+less than 11 seconds whenever the sleep function, \emph{nytnyt}, is
+called. See the \emph{vignette} for more information.
 
 These functions are verbose, allowing the user to get a sense of progress.
 }
@@ -111,6 +112,6 @@ rm(remDr)
 }
 }
 \seealso{
-\code{\link{eg_collect_location_links}} for elgrocer data collection.
+\code{\link{eg_collect_location_links}} for ocado data collection.
 \code{\link{nytnyt}} for sleep functionality.
 }
