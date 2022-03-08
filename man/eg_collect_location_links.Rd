@@ -48,20 +48,26 @@ eg_collect_items(remDr, links_to_use, sleep_min = 0, sleep_max = 1)
 \item{sleep_max}{Maximum time to suspend executing R expressions}
 }
 \value{
-Tibble with the URL for each location
+\code{*_location_links}:Tibble with the URL for each location
 
-Tibble with store links
+\code{*_store_details}: Tibble with store links
 
-Tibble with category links
+\code{*_categories}: Tibble with category links
 
-Tibble with subcategory links
+\code{*_subcategories}: Tibble with subcategory links
 
-Tibble with product details
+\code{*_items}: Tibble with product details
 }
 \description{
-Collect elgrocer data
+The 5 \code{eg_collect_*} functions chronologically scrape the
+\emph{elgrocer} website and return the data indicated by each function name.
+}
+\details{
+@seealso
+\code{\link{oc_collect_categories}}
 }
 \examples{
+\dontrun{
 # Initiate server
 remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 browser = "firefox", verbose = FALSE)$client
@@ -89,4 +95,5 @@ grocer_item <- eg_collect_items(grocer_subcategory$subcategory_link[random_subca
 remDr$close()
 gc(remDr)
 rm(remDr)
+}
 }
