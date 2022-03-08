@@ -25,8 +25,12 @@ html element(s)
 Find html element(s) using a remote client driver
 }
 \examples{
+\dontrun{
+# Initiate server
 remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 browser = "firefox", verbose = FALSE)$client
+
+# Navigate to website & get html element
 remDr$navigate("https://duckduckgo.com")
 get_html_element(remDr = remDr, css = ".content-info__title", type = "text")
 
@@ -34,4 +38,5 @@ get_html_element(remDr = remDr, css = ".content-info__title", type = "text")
 remDr$close()
 gc(remDr)
 rm(remDr)
+}
 }

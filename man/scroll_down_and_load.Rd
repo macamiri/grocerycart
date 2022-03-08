@@ -30,14 +30,22 @@ A character string
 Scroll to dynamically load more of the webpage
 }
 \examples{
+\dontrun{
+# Initiate server
 remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 browser = "firefox", verbose = FALSE)$client
+
+# Navigate to webpage & scroll down incrementally
 url <- "https://www.ocado.com/browse"
 remDr$navigate(url)
 scroll_down_page_perc(remDr = remDr, perc = seq(0, 1, .25))
+
+# Scroll to the top of the webpage
+scroll_to_top(remDr = remDr)
 
 # Close the server
 remDr$close()
 gc(remDr)
 rm(remDr)
+}
 }

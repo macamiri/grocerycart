@@ -19,8 +19,12 @@ A character string
 Get the title of the current page
 }
 \examples{
+\dontrun{
+# Initiate server
 remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 browser = "firefox", verbose = FALSE)$client
+
+# Navigate to webpage & get title
 remDr$navigate("https://duckduckgo.com")
 get_page_title(remDr = remDr)
 
@@ -28,4 +32,5 @@ get_page_title(remDr = remDr)
 remDr$close()
 gc(remDr)
 rm(remDr)
+}
 }
