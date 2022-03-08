@@ -51,20 +51,32 @@ oc_collect_nutrition_table(
 \item{sleep_max}{Maximum time to suspend executing R expressions}
 }
 \value{
-Tibble with category links
+\code{*_categories}: Tibble with category links
 
-Tibble with general product data
+\code{*_product_general}: Tibble with general product data
 
-Tibble with extra product data
+\code{*_product_extra}: Tibble with extra product data
 
-Tibble with product reviews
+\code{*_product_reviews}: Tibble with product reviews
 
-List with products' nutrition tables
+\code{*_nutrition_table}: List with products' nutrition tables
 }
 \description{
-Collect ocado data
+The 5 \code{oc_collect_*} functions scrape the \emph{ocado} website
+and return the data indicated by each function name.
 }
+\section{Note}{
+
+In order to play nice with the website, the scraper functions have
+a built in 'sleep functionality'. This means that the functions will
+suspend execution (i.e., go to sleep) for a random time interval, usually
+less than 11 seconds whenever the sleep function, \emph{nytnyt}, is called.
+
+These functions are verbose, allowing the user to get a sense of progress.
+}
+
 \examples{
+\dontrun{
 # Initiate server
 remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 browser = "firefox", verbose = FALSE)$client
@@ -96,4 +108,9 @@ oc_product_general$product_link[random_product_links[1:3]])
 remDr$close()
 gc(remDr)
 rm(remDr)
+}
+}
+\seealso{
+\code{\link{eg_collect_location_links}} for elgrocer data collection.
+\code{\link{nytnyt}} for sleep functionality.
 }
