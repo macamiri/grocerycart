@@ -7,7 +7,8 @@
 #' In order to play nice with the website, the scraper functions have
 #' a built in 'sleep functionality'. This means that the functions will
 #' suspend execution (i.e., go to sleep) for a random time interval, usually
-#' less than 11 seconds whenever the sleep function, \emph{nytnyt}, is called.
+#' less than 11 seconds whenever the sleep function, \emph{nytnyt}, is
+#' called. See the \emph{vignette} for more information.
 #'
 #' These functions are verbose, allowing the user to get a sense of progress.
 #'
@@ -92,7 +93,7 @@ eg_collect_stores_details <- function(remDr = remDr,
                                       url = "https://www.elgrocer.com") {
 
   links_to_use %>%
-    purrr::map_dfr(., function(.x) {
+    purrr::map_dfr(.data, function(.x) {
       # Navigate to the url
       remDr$navigate(.x)
       grocerycart::nytnyt(c(5, 10), crayon_col = crayon::blue, "Make sure page loads \n")
@@ -115,7 +116,7 @@ eg_collect_stores_details <- function(remDr = remDr,
                                            value = "store-info")
 
       rem_store_info %>%
-        purrr::map(., ~ .$clickElement()) %>%
+        purrr::map(.data, ~ .$clickElement()) %>%
         unlist()
 
       # Number of stores - selenium
@@ -170,7 +171,7 @@ eg_collect_categories <- function(remDr = remDr,
   unique_links <- unique(links)
 
   unique_links %>%
-    purrr::map_dfr(., function(.x) {
+    purrr::map_dfr(.data, function(.x) {
       remDr$navigate(.x)
       grocerycart::nytnyt(c(5, 10), crayon_col = crayon::blue, "Make sure page loads \n")
       grocerycart::current_url(remDr)
@@ -254,7 +255,7 @@ eg_collect_subcategories <- function(remDr = remDr,
                                      url = "https://www.elgrocer.com") {
 
   links_to_use %>%
-    purrr::map_dfr(., function(.x) {
+    purrr::map_dfr(.data, function(.x) {
       # Navigate to subcategory
       remDr$navigate(.x)
       grocerycart::nytnyt(c(5, 10), crayon_col = crayon::blue, "Make sure page loads \n")
@@ -275,8 +276,10 @@ eg_collect_subcategories <- function(remDr = remDr,
         expr = {
           num_of_categories <-
             num_of_categories_tibble %>%
-            dplyr::filter(stringr::str_to_lower(.data$store_name) == stringr::str_to_lower(.data$store_title)) %>%
-            .[[2]]
+            dplyr::filter(
+              stringr::str_to_lower(.data$store_name) == stringr::str_to_lower(.data$store_title)
+              ) %>%
+            .data[[2]]
 
           num_of_categories <- num_of_categories + 1
 
@@ -285,7 +288,7 @@ eg_collect_subcategories <- function(remDr = remDr,
                                            css = "div.slider-item > a:nth-child(1)",
                                            type = "attribute",
                                            attribute_selector = "href") %>%
-            .[-c(1:num_of_categories)]
+            .data[-c(1:num_of_categories)]
 
           subcategory_links <- paste0(url, subcategory_link_extensions)
 
@@ -341,7 +344,7 @@ eg_collect_items <- function(remDr,
                              sleep_min = 0, sleep_max = 1) {
 
   links_to_use %>%
-    purrr::map_dfr(., function(.x) {
+    purrr::map_dfr(.data, function(.x) {
       # Navigate to subcategory page
       remDr$navigate(.x)
       grocerycart::nytnyt(c(5, 10), crayon_col = crayon::blue, "Make sure page loads \n")
