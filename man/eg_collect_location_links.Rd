@@ -62,10 +62,17 @@ eg_collect_items(remDr, links_to_use, sleep_min = 0, sleep_max = 1)
 The 5 \code{eg_collect_*} functions chronologically scrape the
 \emph{elgrocer} website and return the data indicated by each function name.
 }
-\details{
-@seealso
-\code{\link{oc_collect_categories}}
+\section{Note}{
+
+In order to play nice with the website, the scraper functions have
+a built in 'sleep functionality'. This means that the functions will
+suspend execution (i.e., go to sleep) for a random time interval, usually
+less than 11 seconds whenever the sleep function, \emph{nytnyt}, is
+called. See the \emph{vignette} for more information.
+
+These functions are verbose, allowing the user to get a sense of progress.
 }
+
 \examples{
 \dontrun{
 # Initiate server
@@ -96,4 +103,8 @@ remDr$close()
 gc(remDr)
 rm(remDr)
 }
+}
+\seealso{
+\code{\link{oc_collect_categories}} for elgrocer data collection.
+\code{\link{nytnyt}} for sleep functionality.
 }
