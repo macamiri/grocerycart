@@ -1,12 +1,28 @@
 #' Collect ocado data
 #'
+#' The 5 \code{oc_collect_*} functions scrape the \emph{ocado} website
+#' and return the data indicated by each function name.
+#'
+#' @section Note:
+#' In order to play nice with the website, the scraper functions have
+#' a built in 'sleep functionality'. This means that the functions will
+#' suspend execution (i.e., go to sleep) for a random time interval, usually
+#' less than 11 seconds whenever the sleep function, \emph{nytnyt}, is called.
+#'
+#' These functions are verbose, allowing the user to get a sense of progress.
+#'
+#' @seealso
+#' \code{\link{eg_collect_location_links}} for ocado data collection.
+#' \code{\link{nytnyt}} for sleep functionality.
+#'
 #' @param remDr Remote client driver
 #' @param url ocado url
 #'
-#' @return Tibble with category links
+#' @return \code{*_categories}: Tibble with category links
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Initiate server
 #' remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 #' browser = "firefox", verbose = FALSE)$client
@@ -38,6 +54,7 @@
 #' remDr$close()
 #' gc(remDr)
 #' rm(remDr)
+#' }
 oc_collect_categories <- function(remDr = remDr,
                                   url = "https://www.ocado.com") {
   # Visit website
@@ -77,7 +94,7 @@ oc_collect_categories <- function(remDr = remDr,
 #' @param sleep_min Minimum time to suspend executing R expressions
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
-#' @return Tibble with general product data
+#' @return \code{*_product_general}: Tibble with general product data
 #' @export
 oc_collect_product_general <- function(remDr = remDr,
                                        links_to_use,
@@ -209,7 +226,7 @@ oc_collect_product_general <- function(remDr = remDr,
 #' @param sleep_min Minimum time to suspend executing R expressions
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
-#' @return Tibble with extra product data
+#' @return \code{*_product_extra}: Tibble with extra product data
 #' @export
 oc_collect_product_extra <- function(remDr = remDr,
                                      links_to_use,
@@ -326,7 +343,7 @@ oc_collect_product_extra <- function(remDr = remDr,
 #' @param sleep_min Minimum time to suspend executing R expressions
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
-#' @return Tibble with product reviews
+#' @return \code{*_product_reviews}: Tibble with product reviews
 #' @export
 oc_collect_product_reviews <- function(remDr = remDr,
                                        links_to_use,
@@ -445,7 +462,7 @@ oc_collect_product_reviews <- function(remDr = remDr,
 #' @param sleep_min Minimum time to suspend executing R expressions
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
-#' @return List with products' nutrition tables
+#' @return \code{*_nutrition_table}: List with products' nutrition tables
 #' @export
 oc_collect_nutrition_table <- function(remDr = remDr,
                                        links_to_use,
