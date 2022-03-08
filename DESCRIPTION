@@ -1,14 +1,12 @@
 Package: grocerycart
-Title: Collect Grocery Data
+Title: Collect Grocery Data from elGrocer & Ocado
 Version: 0.0.0.9000
 Authors@R: 
     person("Mo", "Amiri", , "moamiristat@protonmail.com", role = c("aut", "cre"))
-Description: Scraper functions to collect data from 2 online grocery services, 
-    and helper functions to analyze data.
+Description: Scraper functions that collect data from 2 online grocery 
+    services, wrangling functions to clean the data collected, and helper 
+    functions to analyze the data.
 License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
 Imports: 
     beepr,
     crayon,
@@ -24,3 +22,6 @@ Imports:
     stringr,
     tibble,
     wdman
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
