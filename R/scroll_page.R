@@ -49,15 +49,19 @@ scroll_down_and_load <- function(remDr = remDr){
 }
 
 #' @rdname scroll_down_and_load
+#'
 #' @param remDr Remote client driver
+#'
 #' @export
 scroll_to_top <- function(remDr = remDr) {
   remDr$executeScript("window.scrollTo(0, 0);", args = list(1))
 }
 
 #' @rdname scroll_down_and_load
+#'
 #' @param remDr Remote client driver
 #' @param perc Incrementally scroll down the page
+#'
 #' @export
 scroll_down_page_perc <- function(remDr = remDr, perc = seq(0, 1, .005)) {
 
@@ -84,8 +88,10 @@ scroll_down_page_perc <- function(remDr = remDr, perc = seq(0, 1, .005)) {
 }
 
 #' @rdname scroll_down_and_load
+#'
 #' @param remDr Remote client driver
 #' @param perc Incrementally scroll up the page
+#'
 #' @export
 scroll_up_page_perc <- function(remDr = remDr, perc = seq(0, 1, .0025)) {
 
@@ -109,4 +115,26 @@ scroll_up_page_perc <- function(remDr = remDr, perc = seq(0, 1, .0025)) {
   }
   )
   cat(crayon::green("Reached top of page \n"))
+}
+
+#' @rdname scroll_down_and_load
+#' @export
+click_show_more <- function(remDr = remDr) {
+  i <- 0
+  repeat({
+    output_click <- tryCatch(
+      expr = {
+        remDr$findElement(using = "css",
+                          value = "button.show-more")$clickElement()
+        i <- i + 1
+        cat(crayon::bgCyan("Clicked ", i, " times\n"))
+        grocerycart::nytnyt(c(2, 5))
+        paste("clicked")
+      },
+      error = function(e) {
+        cat(crayon::bgYellow("No show more button. Time to scroll down and up the page to load all products.\n"))
+      }
+    )
+    if(purrr::is_null(output_click)) {break}
+  })
 }
