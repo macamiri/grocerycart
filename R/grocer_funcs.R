@@ -14,27 +14,28 @@
 #' # Collect all location links
 #' grocer_location <- eg_collect_location_links(remDr = remDr, url = "https://www.elgrocer.com")
 #'
-#' # Collect store details from 2 locations
-#' grocer_store <- eg_collect_stores_details(remDr, grocer_location$location_link[1:2])
+#' # Collect store details from 5 locations
+#' grocer_store <- eg_collect_stores_details(remDr, grocer_location$location_link[1:5])
 #'
-#' # Collect categories from 1 store
-#' grocer_category <- eg_collect_categories(remDr, grocer_store$store_link[1])
+#' # Collect categories from 3 stores
+#' grocer_category <- eg_collect_categories(remDr, grocer_store$store_link[1:3])
 #'
 #' # Collect subcategories from 3 categories
 #' random_category_links <- sample(1:length(grocer_category$category_link),
 #' 3, replace = FALSE)
-#' grocer_subcategory <- eg_collect_subcategories(grocer_category$category_link[random_category_links])
+#' grocer_subcategory <- eg_collect_subcategories(remDr = remDr, links_to_use = grocer_category$category_link[random_category_links])
 #'
-#' # Collect product data from 4 subcategories
+#' # Collect product data from 2 subcategories
 #' random_subcategory_links <- sample(1:length(grocer_subcategory$subcategory_link),
-#' 4, replace = FALSE)
+#' 2, replace = FALSE)
 #' grocer_item <- eg_collect_items(grocer_subcategory$subcategory_link[random_subcategory_links])
 #'
 #' # Close the server
 #' remDr$close()
 #' gc(remDr)
 #' rm(remDr)
-eg_collect_location_links <- function(remDr = remDr, url = "https://www.elgrocer.com") {
+eg_collect_location_links <- function(remDr = remDr,
+                                      url = "https://www.elgrocer.com") {
   # Navigate to homepage
   remDr$navigate(url)
   grocerycart::nytnyt(c(5, 10),
@@ -68,8 +69,9 @@ eg_collect_location_links <- function(remDr = remDr, url = "https://www.elgrocer
 #' @return Tibble with store links
 #' @export
 eg_collect_stores_details <- function(remDr = remDr,
-                                   links_to_use,
-                                   sleep_min = 0, sleep_max = 1) {
+                                      links_to_use,
+                                      sleep_min = 0, sleep_max = 1,
+                                      url = "https://www.elgrocer.com") {
 
   links_to_use %>%
     purrr::map_dfr(., function(.x) {
@@ -102,13 +104,7 @@ eg_collect_stores_details <- function(remDr = remDr,
       num_of_stores_selenium <- length(rem_store_info)
 
       # Verify that all stores' 'i' icon was clicked
-      if(num_of_stores_rvest == num_of_stores_selenium) {
-        cat(crayon::green("Success! Lengths match: ",  num_of_stores_rvest, "\n"))
-      } else {
-        stop(crayon::red("Go Back! Lengths match DO NOT match:\n",
-                         "From selenium:", num_of_stores_selenium, "\n",
-                         "From rvest:", num_of_stores_rvest))
-      }
+      grocerycart::verify_grocer_length_match(num_of_stores_selenium, num_of_stores_rvest)
 
       # Collect the extra 'i' icon data
       store_details <- grocerycart::get_html_elements(remDr, css = ".store-detail")
@@ -148,8 +144,9 @@ eg_collect_stores_details <- function(remDr = remDr,
 #' @return Tibble with category links
 #' @export
 eg_collect_categories <- function(remDr = remDr,
-                               links_to_use,
-                               sleep_min = 0, sleep_max = 1) {
+                                  links_to_use,
+                                  sleep_min = 0, sleep_max = 1,
+                                  url = "https://www.elgrocer.com") {
   # Category links
   links <- paste0(links_to_use, "/categories")
   unique_links <- unique(links)
@@ -192,22 +189,12 @@ eg_collect_categories <- function(remDr = remDr,
       category_links <- paste0(url, category_link_ext)
 
       # Verify that every category's link was collected
-      verify_length_match <- function(sel, rve) {
-        if(sel == rve) {
-          cat(crayon::green("Success! Lengths match: ",  rve, "\n"))
-        } else {
-          stop(crayon::red("Go Back! Lengths match DO NOT match:\n",
-                           "From selenium:", sel, "\n",
-                           "From rvest:", rve))
-        }
-      }
-
-      verify_length_match(sel = num_of_categories,
-                          rve = if(category_links == url) {
-                            0
-                          } else {
-                            length(category_links)
-                          })
+      grocerycart::verify_grocer_length_match(num_of_categories,
+                                              if(category_links == url) {
+                                                0
+                                                } else {
+                                                  length(category_links)
+                                                  })
 
       # Sleep
       grocerycart::nytnyt(c(sleep_min, sleep_max),
@@ -239,10 +226,14 @@ eg_collect_categories <- function(remDr = remDr,
 #' @param sleep_max Maximum time to suspend executing R expressions
 #'
 #' @return Tibble with subcategory links
+#'
+#' @importFrom rlang .data
+#'
 #' @export
 eg_collect_subcategories <- function(remDr = remDr,
-                                  links_to_use,
-                                  sleep_min = 0, sleep_max = 1) {
+                                     links_to_use,
+                                     sleep_min = 0, sleep_max = 1,
+                                     url = "https://www.elgrocer.com") {
 
   links_to_use %>%
     purrr::map_dfr(., function(.x) {
@@ -288,22 +279,12 @@ eg_collect_subcategories <- function(remDr = remDr,
           num_of_subcategories <- length(store_subcategories)
 
           # Verify that every subcategory's link was collected
-          verify_length_match <- function(sel, rve) {
-            if(sel == rve) {
-              cat(crayon::green("Success! Lengths match: ",  rve, "\n"))
-            } else {
-              stop(crayon::red("Go Back! Lengths match DO NOT match:\n",
-                               "From selenium:", sel, "\n",
-                               "From rvest:", rve))
-            }
-          }
-
-          verify_length_match(sel = num_of_subcategories,
-                              rve = if(subcategory_links == url) {
-                                0
-                              } else {
-                                length(subcategory_links)
-                              })
+          grocerycart::verify_grocer_length_match(num_of_subcategories,
+                                                  if(subcategory_links == url) {
+                                                    0
+                                                  } else {
+                                                    length(subcategory_links)
+                                                  })
 
           # Sleep
           grocerycart::nytnyt(c(sleep_min, sleep_max),
@@ -338,8 +319,8 @@ eg_collect_subcategories <- function(remDr = remDr,
 #' @return Tibble with product details
 #' @export
 eg_collect_items <- function(remDr,
-                          links_to_use = grocer_subcategory$subcategory_link,
-                          sleep_min = 0, sleep_max = 1) {
+                             links_to_use,
+                             sleep_min = 0, sleep_max = 1) {
 
   links_to_use %>%
     purrr::map_dfr(., function(.x) {
