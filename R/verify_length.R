@@ -6,7 +6,7 @@
 #' @return logical
 #'
 #' @export
-verify_grocer_length_match <- function(sel, rve) {
+verify_eg_length_match <- function(sel, rve) {
   if(sel == rve) {
     cat(crayon::green("Success! Lengths match: ",  rve, "\n"))
   } else {
@@ -16,7 +16,7 @@ verify_grocer_length_match <- function(sel, rve) {
   }
 }
 
-#' @rdname verify_grocer_length_match
+#' @rdname verify_eg_length_match
 #'
 #' @param obj1 titles output length
 #' @param obj2 weights output length
