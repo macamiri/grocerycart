@@ -9,8 +9,12 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' # Initiate server
 #' remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 #' browser = "firefox", verbose = FALSE)$client
+#'
+#' # Navigate to website & get html element
 #' remDr$navigate("https://duckduckgo.com")
 #' get_html_element(remDr = remDr, css = ".content-info__title", type = "text")
 #'
@@ -18,9 +22,10 @@
 #' remDr$close()
 #' gc(remDr)
 #' rm(remDr)
+#' }
 get_html_element <- function(remDr, ..., type = "text", attribute_selector) {
   page <- remDr$getPageSource() %>%
-    .[[1]] %>%
+    .data[[1]] %>%
     rvest::read_html() %>%
     rvest::html_element(...)
 
@@ -46,7 +51,7 @@ get_html_element <- function(remDr, ..., type = "text", attribute_selector) {
 #' @export
 get_html_elements <- function(remDr, ..., type = "text", attribute_selector) {
   page <- remDr$getPageSource() %>%
-    .[[1]] %>%
+    .data[[1]] %>%
     rvest::read_html() %>%
     rvest::html_elements(...)
 
