@@ -36,19 +36,19 @@ remDr$navigate(url)
 ### (A) Collect all location names and links
 eg_location <- eg_collect_location_links(remDr, url)
 
-# write_csv(eg_location, here::here("data/eg_location.csv"))
+# write_csv(eg_location, here::here("data-raw/eg_location.csv"))
 
 ### (B) Collect all stores' 'i' details and links
 eg_store <- eg_collect_stores_details(remDr, eg_location$location_link)
 
-# write_csv(eg_store, here::here("data/eg_store.csv"))
+# write_csv(eg_store, here::here("data-raw/eg_store.csv"))
 
 ### (C) Collect all categories data
 # IMPORTANT: keep object name as 'eg_category'
 # 'eg_category' is used internally in the eg_collect_subcategories function
 eg_category <- eg_collect_categories(remDr, eg_store$store_link)
 
-# write_csv(eg_category, here::here("data/eg_category.csv"))
+# write_csv(eg_category, here::here("data-raw/eg_category.csv"))
 
 ### (D) Collect subcategories data from 300 random categories
 random_category_links <- sample(1:length(eg_category$category_link),
@@ -57,7 +57,7 @@ random_category_links <- sample(1:length(eg_category$category_link),
 eg_subcategory <- eg_collect_subcategories(remDr,
                                                eg_category$category_link[random_category_links])
 
-# write_csv(eg_subcategory, here::here("data/eg_subcategory.csv"))
+# write_csv(eg_subcategory, here::here("data-raw/eg_subcategory.csv"))
 
 ### (E) Collect item data from 1000 random subcategories
 ### (from the 300 categories chosen above)
@@ -67,9 +67,9 @@ random_subcategory_links <- sample(1:length(eg_subcategory$subcategory_link),
 grocer_item <- eg_collect_items(remDr,
                                 eg_subcategory$subcategory_link[random_subcategory_links])
 
-# write_csv(grocer_item, here::here("data/grocer_item.csv"))
+# write_csv(grocer_item, here::here("data-raw/grocer_item.csv"))
 
-##### 5: Clean data -------------------------------------
+##### 5: Clean data ---------------------------------
 ### LOAD DATA
 # # ...EITHER List the data files if the csv files from step 4 are in the
 # # folder (i.e., downloaded from github)
@@ -104,7 +104,7 @@ nested_grocery <-
 clean_grocer_location <-
   nested_grocery %>%
   unnest_table("eg_location")
-# write_csv(clean_eg_location, here::here("data/clean_eg_location.csv"))
+# write_csv(clean_eg_location, here::here("data-raw/clean_eg_location.csv"))
 
 ### CATEGORY: Remove offer/promotion page since they contain products already
 ### available in other subcategories
@@ -114,20 +114,20 @@ clean_grocer_category <-
   distinct(store_name, category, .keep_all = TRUE) %>%
   filter(!str_detect(category_link, "promotion")) %>%
   rename("category_image_link" = image_link)
-# write_csv(clean_eg_category, here::here("data/clean_eg_category.csv"))
+# write_csv(clean_eg_category, here::here("data-raw/clean_eg_category.csv"))
 
 ### SUBCATEGORY: No change to this table
 clean_grocer_subcategory <-
   nested_grocery %>%
   unnest_table("eg_subcategory")
-# write_csv(clean_eg_subcategory, here::here("data/clean_eg_subcategory.csv"))
+# write_csv(clean_eg_subcategory, here::here("data-raw/clean_eg_subcategory.csv"))
 
 ### ITEM: Change price column to numeric
 clean_grocer_product <-
   nested_grocery %>%
   unnest_table("eg_item") %>%
   mutate(price = parse_number(price))
-# write_csv(clean_eg_product, here::here("data/clean_eg_product.csv"))
+# write_csv(clean_eg_product, here::here("data-raw/clean_eg_product.csv"))
 
 ### STORE: separate details column
 separator_detail <- paste("Min order amount", "Delivery within",
@@ -152,8 +152,13 @@ clean_grocer_store <-
          min_order_amount = parse_number(min_order_amount),
          across(.cols = c("delivery_start", "delivery_end"),
                 ~ hms::parse_hm(.)))
-# write_csv(clean_eg_store, here::here("data/clean_eg_store.csv"))
-
-
+# write_csv(clean_eg_store, here::here("data-raw/clean_eg_store.csv"))
 
 #### usethis::use_data(raw_eg_data, overwrite = TRUE, )
+
+##### 6: Close Selenium server ------------------------------------------------
+remDr$close()
+system("kill /im java.exe /f")
+gc(remDr)
+rm(remDr)
+
