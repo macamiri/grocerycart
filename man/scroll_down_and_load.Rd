@@ -30,7 +30,7 @@ A character string
 Scroll to dynamically load more of the webpage
 }
 \examples{
-remDr <- RSelenium::rsDriver(port = 4446L,
+remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 browser = "firefox", verbose = FALSE)$client
 url <- "https://www.ocado.com/browse"
 remDr$navigate(url)

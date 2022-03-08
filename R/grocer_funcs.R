@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' # Initiate server
-#' remDr <- RSelenium::rsDriver(port = 4446L,
+#' remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 #' browser = "firefox", verbose = FALSE)$client
 #'
 #' # Collect all location links
@@ -23,7 +23,7 @@
 #' # Collect subcategories from 3 categories
 #' random_category_links <- sample(1:length(grocer_category$category_link),
 #' 3, replace = FALSE)
-#' grocer_subcategory <- eg_collect_subcategories(remDr = remDr, links_to_use = grocer_category$category_link[random_category_links])
+#' grocer_subcategory <- eg_collect_subcategories(grocer_category$category_link[random_category_links])
 #'
 #' # Collect product data from 2 subcategories
 #' random_subcategory_links <- sample(1:length(grocer_subcategory$subcategory_link),

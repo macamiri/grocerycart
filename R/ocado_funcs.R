@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' # Initiate server
-#' remDr <- RSelenium::rsDriver(port = 4446L,
+#' remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 #' browser = "firefox", verbose = FALSE)$client
 #'
 #' # Collect category links

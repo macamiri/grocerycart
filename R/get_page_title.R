@@ -6,7 +6,8 @@
 #' @export
 #'
 #' @examples
-#' remDr <- RSelenium::rsDriver(port = 4446L, browser = "firefox", verbose = FALSE)$client
+#' remDr <- RSelenium::rsDriver(port = netstat::free_port(),
+#' browser = "firefox", verbose = FALSE)$client
 #' remDr$navigate("https://duckduckgo.com")
 #' get_page_title(remDr = remDr)
 #'
