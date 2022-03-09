@@ -209,12 +209,12 @@
 #' the packages \emph{charlatan}, \emph{fabricatr}, \emph{randomNames}
 #' and \emph{wakefield}.
 #'
-#' @format A data frame with 4,994 rows and 6 variables:
+#' @format A data frame with 4,991 rows and 6 variables:
 #' \describe{
 #'   \item{customer_id}{unique customer id}
 #'   \item{customer_name}{customer name generated via \emph{randomNames}}
-#'   \item{customer_age}{customer age generated via \emph{wakefield}}
-#'   \item{household_size}{household generated via \emph{wakefield}}
+#'   \item{customer_age}{customer age generated via \emph{wakefield}, 18 to 75}
+#'   \item{household_size}{household size generated via \emph{wakefield}, 1 to 7}
 #'   \item{long}{longitude of customers' delivery address in the UAE
 #'   generated via \emph{charlatan}}
 #'   \item{lat}{latitude of customers' delivery address in the UAE
@@ -245,7 +245,7 @@
 #' combined. The product names and prices were collected from
 #' \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.
 #'
-#' @format A data frame with 59,862 rows and 4 variables:
+#' @format A data frame with 59,847 rows and 4 variables:
 #' \describe{
 #'   \item{basket_id}{unique basket id}
 #'   \item{order_id}{order id foreign key related to \emph{order_db_funmart}}

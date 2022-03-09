@@ -88,7 +88,7 @@ product_prob_funmart <-
 #   N = num_of_customers,
 #   customer_name = randomNames(n = N, name.sep = " ", name.order = "first.last"),
 #   customer_age = wakefield::age(n = N, x = 18:75, prob = c(rep(.3, 13), rep(.6, 30), rep(.1, 15))),
-#   household_size = wakefield::children(n = N, x = 0:7, prob = c(.17, .25, .25, .2, .05, .05, .01, .01)),
+#   household_size = wakefield::children(n = N, x = 1:7, prob = c(.17, .25, .25, .2, .05, .05, .02)),
 #   long = ch_position(n = N, bbox = c(51, 22.50, 56.25, 26)) %>% purrr::map_chr(., ~ .[1]),
 #   lat = ch_position(n = N, bbox = c(51, 22.50, 56.25, 26)) %>% purrr::map_chr(., ~ .[2]),
 # ) %>%
@@ -126,27 +126,27 @@ product_prob_funmart <-
 #   tibble::as_tibble() %>%
 #   dplyr::rename("order_id" = ID)
 # # readr::write_csv(order_db, here::here("data/order_db.csv"))
-
-
-# Basket line item database table - join later if need more product info
-basket_db <- fabricate(
-  N = length(customer_db$customer_id),
-  order_id = as.character(sample(order_db$order_id, size = N, replace = FALSE)),
-  product = grocerycart::select_products(products = product_prob$product,
-                                         customer_id = customer_db$customer_id,
-                                         probs = product_prob$probs,
-                                         min_products = 10,
-                                         mean_products = 26,
-                                         sd_products = 4),
-) %>%
-  tibble::as_tibble() %>%
-  tidyr::separate_rows(product, sep = "@") %>%
-  dplyr::left_join(product_prob, by = "product") %>%
-  dplyr::select(ID, order_id, product, price) %>%
-  dplyr::rename("basket_id" = ID) %>%
-  dplyr::distinct(basket_id, product, .keep_all = TRUE)
-
-# readr::write_csv(basket_db, here::here("data/basket_db.csv"))
+#
+#
+# # Basket line item database table - join later if need more product info
+# basket_db <- fabricate(
+#   N = length(customer_db$customer_id),
+#   order_id = as.character(sample(order_db$order_id, size = N, replace = FALSE)),
+#   product = grocerycart::select_products(products = product_prob$product,
+#                                          customer_id = customer_db$customer_id,
+#                                          probs = product_prob$probs,
+#                                          min_products = 10,
+#                                          mean_products = 26,
+#                                          sd_products = 4),
+# ) %>%
+#   tibble::as_tibble() %>%
+#   tidyr::separate_rows(product, sep = "@") %>%
+#   dplyr::left_join(product_prob, by = "product") %>%
+#   dplyr::select(ID, order_id, product, price) %>%
+#   dplyr::rename("basket_id" = ID) %>%
+#   dplyr::distinct(basket_id, product, .keep_all = TRUE)
+#
+# # readr::write_csv(basket_db, here::here("data/basket_db.csv"))
 
 ##### 5: Generate fake random customer data for 1 store (funmart) ----
 num_of_customers <- 5000
@@ -157,7 +157,7 @@ customer_db_funmart <- fabricate(
   N = num_of_customers,
   customer_name = randomNames(n = N, name.sep = " ", name.order = "first.last"),
   customer_age = wakefield::age(n = N, x = 18:75, prob = c(rep(.3, 13), rep(.6, 30), rep(.1, 15))),
-  household_size = wakefield::children(n = N, x = 0:7, prob = c(.17, .25, .25, .2, .05, .05, .01, .01)),
+  household_size = wakefield::children(n = N, x = 1:7, prob = c(.17, .25, .25, .2, .05, .05, .02)),
   long = ch_position(n = N, bbox = c(51, 22.50, 56.25, 26)) %>% purrr::map_chr(., ~ .[1]),
   lat = ch_position(n = N, bbox = c(51, 22.50, 56.25, 26)) %>% purrr::map_chr(., ~ .[2]),
 ) %>%

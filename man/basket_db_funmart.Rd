@@ -5,7 +5,7 @@
 \alias{basket_db_funmart}
 \title{Basket/Line item database.}
 \format{
-A data frame with 59,862 rows and 4 variables:
+A data frame with 59,847 rows and 4 variables:
 \describe{
 \item{basket_id}{unique basket id}
 \item{order_id}{order id foreign key related to \emph{order_db_funmart}}

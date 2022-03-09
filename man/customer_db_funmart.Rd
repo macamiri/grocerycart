@@ -5,12 +5,12 @@
 \alias{customer_db_funmart}
 \title{Customer database.}
 \format{
-A data frame with 4,994 rows and 6 variables:
+A data frame with 4,991 rows and 6 variables:
 \describe{
 \item{customer_id}{unique customer id}
 \item{customer_name}{customer name generated via \emph{randomNames}}
-\item{customer_age}{customer age generated via \emph{wakefield}}
-\item{household_size}{household generated via \emph{wakefield}}
+\item{customer_age}{customer age generated via \emph{wakefield}, 18 to 75}
+\item{household_size}{household size generated via \emph{wakefield}, 1 to 7}
 \item{long}{longitude of customers' delivery address in the UAE
 generated via \emph{charlatan}}
 \item{lat}{latitude of customers' delivery address in the UAE
