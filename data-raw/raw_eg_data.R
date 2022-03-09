@@ -176,6 +176,7 @@ eg_data <-
          item, weight, price,
          category_image_link, item_image_link,
          store_link) %>%
+  distinct() %>%
   arrange(store_name, category, subcategory, item, price)
 
 ##### 6: Close Selenium server ------------------------------------------------
