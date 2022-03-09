@@ -8,6 +8,10 @@
 #'   \item{location}{name of location in UAE}
 #'   \item{location_link}{link to view stores in location}
 #' }
+#'
+#' @name eg_location
+#' @usage data(eg_location)
+#'
 #' @source \url{https://www.elgrocer.com}
 "eg_location"
 
@@ -30,6 +34,10 @@
 #'   \item{store_link}{link to the store}
 #'   \item{location_link}{link to view stores in location}
 #' }
+#'
+#' @name eg_store
+#' @usage data(eg_store)
+#'
 #' @source \url{https://www.elgrocer.com}
 "eg_store"
 
@@ -45,6 +53,10 @@
 #'   \item{category_image_link}{link to category image}
 #'   \item{store_link}{link to the store}
 #' }
+#'
+#' @name eg_category
+#' @usage data(eg_category)
+#'
 #' @source \url{https://www.elgrocer.com}
 "eg_category"
 
@@ -59,6 +71,10 @@
 #'   \item{subcategory_link}{link to the subcategory in a store}
 #'   \item{category_link}{link to the category in a store}
 #' }
+#'
+#' @name eg_subcategory
+#' @usage data(eg_subcategory)
+#'
 #' @source \url{https://www.elgrocer.com}
 "eg_subcategory"
 
@@ -75,6 +91,10 @@
 #'   \item{price}{product price, in GPB}
 #'   \item{item_image_link}{link to product image}
 #' }
+#'
+#' @name eg_product
+#' @usage data(eg_product)
+#'
 #' @source \url{https://www.elgrocer.com}
 "eg_product"
 
@@ -96,6 +116,10 @@
 #'   \item{item_image_link}{link to product image}
 #'   \item{store_link}{link to the store}
 #' }
+#'
+#' @name eg_data
+#' @usage data(eg_data)
+#'
 #' @source \url{https://www.elgrocer.com}
 "eg_data"
 
@@ -108,6 +132,10 @@
 #'   \item{category}{category of products}
 #'   \item{category_link}{link to the category}
 #' }
+#'
+#' @name oc_category
+#' @usage data(oc_category)
+#'
 #' @source \url{https://www.ocado.com}
 "oc_category"
 
@@ -126,6 +154,10 @@
 #'   \item{product_link}{link to product}
 #'   \item{category_link}{link to category}
 #' }
+#'
+#' @name oc_product_general
+#' @usage data(oc_product_general)
+#'
 #' @source \url{https://www.ocado.com}
 "oc_product_general"
 
@@ -145,6 +177,10 @@
 #'   \item{num_of_reviews}{number of reviews for product}
 #'   \item{recommend}{percent of customers that recommend product}
 #' }
+#'
+#' @name oc_product_extra
+#' @usage data(oc_product_extra)
+#'
 #' @source \url{https://www.ocado.com}
 "oc_product_extra"
 
@@ -157,6 +193,10 @@
 #'   \item{product_link}{link to product}
 #'   \item{reviews}{text reviews for product}
 #' }
+#'
+#' @name oc_product_review
+#' @usage data(oc_product_review)
+#'
 #' @source \url{https://www.ocado.com}
 "oc_product_review"
 
@@ -169,6 +209,10 @@
 #'   \item{product_link}{link to product}
 #'   \item{nutrition}{nutrition table for product}
 #' }
+#'
+#' @name oc_nutrition_table
+#' @usage data(oc_nutrition_table)
+#'
 #' @source \url{https://www.ocado.com}
 "oc_nutrition_table"
 
@@ -199,6 +243,10 @@
 #'   \item{product_link}{link to product}
 #'   \item{category_link}{link to category}
 #' }
+#'
+#' @name oc_data
+#' @usage data(oc_data)
+#'
 #' @source \url{https://www.ocado.com}
 "oc_data"
 
@@ -220,6 +268,9 @@
 #'   \item{lat}{latitude of customers' delivery address in the UAE
 #'   generated via \emph{charlatan}}
 #' }
+#'
+#' @name customer_db_funmart
+#' @usage data(customer_db_funmart)
 "customer_db_funmart"
 
 #' Orders database.
@@ -236,6 +287,9 @@
 #'   \item{order_time}{order time}
 #'   \item{store}{grocery store}
 #' }
+#'
+#' @name order_db_funmart
+#' @usage data(order_db_funmart)
 "order_db_funmart"
 
 #' Basket/Line item database.
@@ -252,4 +306,7 @@
 #'   \item{product}{product name}
 #'   \item{price}{product price}
 #' }
+#'
+#' @name basket_db_funmart
+#' @usage data(basket_db_funmart)
 "basket_db_funmart"
