@@ -250,7 +250,7 @@
 #' @source \url{https://www.ocado.com}
 "oc_data"
 
-#' Customer database.
+#' Customer database (4,991 customers).
 #'
 #' A dataset containing customer id, name, age, household size and location.
 #' Almost 5,000 customer entries were randomly generated with the help of
@@ -273,7 +273,7 @@
 #' @usage data(customer_db_funmart)
 "customer_db_funmart"
 
-#' Orders database.
+#' Order database (12,500 orders).
 #'
 #' A dataset containing order id, customer id, order date, and order time.
 #' 12,500 orders were randomly generated with the help of
@@ -292,9 +292,9 @@
 #' @usage data(order_db_funmart)
 "order_db_funmart"
 
-#' Basket/Line item database.
+#' Grocery basket database (59,847 line items).
 #'
-#' A dataset containing basket it, order id, products purchased in each basket
+#' A dataset containing basket id, order id, products purchased in each basket
 #' and price of products. Over 59,000 products were bought in all baskets
 #' combined. The product names and prices were collected from
 #' \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.
