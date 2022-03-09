@@ -21,7 +21,7 @@
 #'   \item{location}{name of location in UAE}
 #'   \item{city}{name of city in UAE}
 #'   \item{store_name}{name of the store}
-#'   \item{min_order_amount}{minimum order amount to qualify for delivery, in AED}
+#'   \item{min_order_amount}{minimum order amount to qualify for delivery, in GBP}
 #'   \item{delivery_within}{time interval for delivery after placing order}
 #'   \item{delivery_start}{time delivery service begins for the day}
 #'   \item{delivery_end}{time delivery service ends for the day}
@@ -72,7 +72,7 @@
 #'   \item{subcategory_link}{link to the subcategory in a store}
 #'   \item{item}{product name}
 #'   \item{weight}{product weight}
-#'   \item{price}{product price, in AED}
+#'   \item{price}{product price, in GPB}
 #'   \item{item_image_link}{link to product image}
 #' }
 #' @source \url{https://www.elgrocer.com}
@@ -91,7 +91,7 @@
 #'   \item{subcategory}{subcategory of products}
 #'   \item{item}{product name}
 #'   \item{weight}{product weight}
-#'   \item{price}{product price, in AED}
+#'   \item{price}{product price, in GBP}
 #'   \item{category_image_link}{link to category image}
 #'   \item{item_image_link}{link to product image}
 #'   \item{store_link}{link to the store}
@@ -201,3 +201,55 @@
 #' }
 #' @source \url{https://www.ocado.com}
 "oc_data"
+
+#' Customer database.
+#'
+#' A dataset containing customer id, name, age, household size and location.
+#' Almost 5,000 customer entries were randomly generated with the help of
+#' the packages \emph{charlatan}, \emph{fabricatr}, \emph{randomNames}
+#' and \emph{wakefield}.
+#'
+#' @format A data frame with 4,994 rows and 6 variables:
+#' \describe{
+#'   \item{customer_id}{unique customer id}
+#'   \item{customer_name}{customer name generated via \emph{randomNames}}
+#'   \item{customer_age}{customer age generated via \emph{wakefield}}
+#'   \item{household_size}{household generated via \emph{wakefield}}
+#'   \item{long}{longitude of customers' delivery address in the UAE
+#'   generated via \emph{charlatan}}
+#'   \item{lat}{latitude of customers' delivery address in the UAE
+#'   generated via \emph{charlatan}}
+#' }
+"customer_db_funmart"
+
+#' Orders database.
+#'
+#' A dataset containing order id, customer id, order date, and order time.
+#' 12,500 orders were randomly generated with the help of
+#' the packages \emph{fabricatr} and \emph{wakefield}.
+#'
+#' @format A data frame with 12,500 rows and 5 variables:
+#' \describe{
+#'   \item{order_id}{unique order id}
+#'   \item{customer_id}{customer id foreign key related to \emph{customer_db_funmart}}
+#'   \item{order_date}{order date}
+#'   \item{order_time}{order time}
+#'   \item{store}{grocery store}
+#' }
+"order_db_funmart"
+
+#' Basket/Line item database.
+#'
+#' A dataset containing basket it, order id, products purchased in each basket
+#' and price of products. Over 59,000 products were bought in all baskets
+#' combined. The product names and prices were collected from
+#' \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.
+#'
+#' @format A data frame with 59,862 rows and 4 variables:
+#' \describe{
+#'   \item{basket_id}{unique basket id}
+#'   \item{order_id}{order id foreign key related to \emph{order_db_funmart}}
+#'   \item{product}{product name}
+#'   \item{price}{product price}
+#' }
+"basket_db_funmart"
