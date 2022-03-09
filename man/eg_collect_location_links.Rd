@@ -34,7 +34,7 @@ eg_collect_subcategories(
   url = "https://www.elgrocer.com"
 )
 
-eg_collect_items(remDr, links_to_use, sleep_min = 0, sleep_max = 1)
+eg_collect_items(remDr = remDr, links_to_use, sleep_min = 0, sleep_max = 1)
 }
 \arguments{
 \item{remDr}{Remote client driver}
@@ -79,24 +79,26 @@ These functions are verbose, allowing the user to get a sense of progress.
 remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 browser = "firefox", verbose = FALSE)$client
 
-# Collect all location links
-grocer_location <- eg_collect_location_links(remDr = remDr, url = "https://www.elgrocer.com")
+# (A) Collect all location links
+eg_location <- eg_collect_location_links(remDr = remDr, url = "https://www.elgrocer.com")
 
-# Collect store details from 5 locations
-grocer_store <- eg_collect_stores_details(remDr, grocer_location$location_link[1:5])
+# (B) Collect store details from 5 locations
+eg_store <- eg_collect_stores_details(remDr, eg_location$location_link[1:5])
 
-# Collect categories from 3 stores
-grocer_category <- eg_collect_categories(remDr, grocer_store$store_link[1:3])
+# (C) Collect categories from 3 stores
+eg_category <- eg_collect_categories(remDr, eg_store$store_link[1:3])
 
-# Collect subcategories from 3 categories
-random_category_links <- sample(1:length(grocer_category$category_link),
+# (D) Collect subcategories from 3 categories
+random_category_links <- sample(1:length(eg_category$category_link),
 3, replace = FALSE)
-grocer_subcategory <- eg_collect_subcategories(grocer_category$category_link[random_category_links])
+eg_subcategory <- eg_collect_subcategories(remDr,
+eg_category$category_link[random_category_links])
 
 # Collect product data from 2 subcategories
-random_subcategory_links <- sample(1:length(grocer_subcategory$subcategory_link),
+random_subcategory_links <- sample(1:length(eg_subcategory$subcategory_link),
 2, replace = FALSE)
-grocer_item <- eg_collect_items(grocer_subcategory$subcategory_link[random_subcategory_links])
+eg_item <- eg_collect_items(remDr,
+eg_subcategory$subcategory_link[random_subcategory_links])
 
 # Close the server
 remDr$close()

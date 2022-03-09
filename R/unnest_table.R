@@ -20,8 +20,7 @@
 #' nst_tbl <- tibble::enframe(table_list, name = "origin", value = "data")
 #'
 #' # Unnest the 'store' tibble
-#' unnest_table(nested_table = nst_tbl, col_name = origin,
-#' table_name = "store", col_data = data)
+#' unnest_table(nested_table = nst_tbl, table_name = "store")
 unnest_table <- function(nested_table, table_name) {
   nested_table$data[nested_table$origin == table_name] %>%
     purrr::pluck(1)

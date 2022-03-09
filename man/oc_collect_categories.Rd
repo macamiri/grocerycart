@@ -82,26 +82,26 @@ These functions are verbose, allowing the user to get a sense of progress.
 remDr <- RSelenium::rsDriver(port = netstat::free_port(),
 browser = "firefox", verbose = FALSE)$client
 
-# Collect category links
+# (A) Collect category links
 oc_category <- oc_collect_categories(remDr = remDr)
 
-# Collect product data from 1 category
+# (B) Collect product data from 1 category
 chosen_category_links <- 7
 oc_product_general <- oc_collect_product_general(
 oc_category$link[chosen_category_links])
 
-# Collect extra product data for 3 products
+# (C) Collect extra product data for 3 products
 set.seed(132)
 random_product_links <- sample(1:length(oc_product_general$product_link),
 3, replace = FALSE)
 oc_product_extra <- oc_collect_product_extra(
 oc_product_general$product_link[random_product_links[1:3]])
 
-# Collect product reviews, if available, for the same 3 products
+# (D) Collect product reviews, if available, for the same 3 products
 oc_product_review <- oc_collect_product_reviews(
 oc_product_general$product_link[random_product_links[1:3]])
 
-# Collect product nutrition table, if available, for the same 3 products
+# (E) Collect product nutrition table, if available, for the same 3 products
 oc_nutrition_table <- oc_collect_nutrition_table(
 oc_product_general$product_link[random_product_links[1:3]])
 
