@@ -136,6 +136,7 @@ eg_product <-
   unnest_table("eg_item") %>%
   mutate(price = parse_number(price)) %>%
   filter(!str_detect(subcategory_link, regex("promotion"))) %>%
+  filter(!is.na(item)) %>%
   distinct(subcategory_link, item, .keep_all = TRUE)
 # write_csv(eg_product, here::here("data-raw/eg_product_clean.csv"))
 
@@ -176,7 +177,7 @@ eg_data <-
          item, weight, price,
          category_image_link, item_image_link,
          store_link) %>%
-  distinct() %>%
+  filter(!is.na(store_name)) %>%
   arrange(store_name, category, subcategory, item, price)
 
 ##### 6: Close Selenium server ------------------------------------------------
