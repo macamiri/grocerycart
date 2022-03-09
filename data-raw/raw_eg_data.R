@@ -128,13 +128,14 @@ eg_subcategory <-
 # write_csv(eg_subcategory, here::here("data-raw/eg_subcategory_clean.csv"))
 
 ### ITEM: Change price column to numeric & remove items listed in promotion
+### Convert price from AED to pounds
 ### To be on the safe side, remove products that have the same name & are
 ### in the same subcategory (i.e., same product listed twice in same
 ### store subcategory)
 eg_product <-
   nested_grocery %>%
   unnest_table("eg_item") %>%
-  mutate(price = parse_number(price)) %>%
+  mutate(price = parse_number(price) * 0.2075) %>%
   filter(!str_detect(subcategory_link, regex("promotion"))) %>%
   filter(!is.na(item)) %>%
   distinct(subcategory_link, item, .keep_all = TRUE)
