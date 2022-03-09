@@ -1,7 +1,8 @@
-#' Names of 131 locations in UAE.
+#' Names of location areas in UAE.
 #'
 #' A dataset contianing the names and links of 131 locations that have grocery
-#' stores that provide online delivery services.
+#' stores that provide online delivery services. A location may contain
+#' several stores. The stores may overlap among different locations.
 #'
 #' @format A data frame with 131 rows and 2 variables:
 #' \describe{
