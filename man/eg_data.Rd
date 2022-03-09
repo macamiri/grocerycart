@@ -12,7 +12,7 @@ A data frame with 15,459 rows and 9 variables:
 \item{subcategory}{subcategory of products}
 \item{item}{product name}
 \item{weight}{product weight}
-\item{price}{product price, in AED}
+\item{price}{product price, in GBP}
 \item{category_image_link}{link to category image}
 \item{item_image_link}{link to product image}
 \item{store_link}{link to the store}

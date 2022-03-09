@@ -10,7 +10,7 @@ A data frame with 184 rows and 11 variables:
 \item{location}{name of location in UAE}
 \item{city}{name of city in UAE}
 \item{store_name}{name of the store}
-\item{min_order_amount}{minimum order amount to qualify for delivery, in AED}
+\item{min_order_amount}{minimum order amount to qualify for delivery, in GBP}
 \item{delivery_within}{time interval for delivery after placing order}
 \item{delivery_start}{time delivery service begins for the day}
 \item{delivery_end}{time delivery service ends for the day}
