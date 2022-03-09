@@ -20,7 +20,7 @@ A data frame with 8,920 rows and 7 variables:
 \url{https://www.ocado.com}
 }
 \usage{
-oc_product_general
+data(oc_product_general)
 }
 \description{
 A dataset containing the general information for almost 9,000 grocery

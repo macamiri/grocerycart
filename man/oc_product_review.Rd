@@ -15,7 +15,7 @@ A data frame with 944 rows and 2 variables:
 \url{https://www.ocado.com}
 }
 \usage{
-oc_product_review
+data(oc_product_review)
 }
 \description{
 A dataset containing the reviews for almost 1,000 grocery products.

@@ -18,7 +18,7 @@ A data frame with 15,459 rows and 5 variables:
 \url{https://www.elgrocer.com}
 }
 \usage{
-eg_product
+data(eg_product)
 }
 \description{
 A dataset containing the name, weight, price and image link of more

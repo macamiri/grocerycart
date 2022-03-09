@@ -16,7 +16,7 @@ A data frame with 156 rows and 3 variables:
 \url{https://www.elgrocer.com}
 }
 \usage{
-eg_subcategory
+data(eg_subcategory)
 }
 \description{
 A dataset containing 1,156 product subcategories chosen randomly from 300

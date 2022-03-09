@@ -21,7 +21,7 @@ A data frame with 992 rows and 8 variables:
 \url{https://www.ocado.com}
 }
 \usage{
-oc_product_extra
+data(oc_product_extra)
 }
 \description{
 A dataset containing extra information (e.g., rating, brand)

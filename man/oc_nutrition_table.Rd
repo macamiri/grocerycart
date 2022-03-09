@@ -15,7 +15,7 @@ A data frame with 992 rows and 2 variables:
 \url{https://www.ocado.com}
 }
 \usage{
-oc_nutrition_table
+data(oc_nutrition_table)
 }
 \description{
 A dataset containing the nutrition tables for almost 1,000 grocery products.

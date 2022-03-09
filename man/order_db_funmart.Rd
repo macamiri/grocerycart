@@ -3,7 +3,7 @@
 \docType{data}
 \name{order_db_funmart}
 \alias{order_db_funmart}
-\title{Orders database.}
+\title{Order database (12,500 orders).}
 \format{
 A data frame with 12,500 rows and 5 variables:
 \describe{
@@ -15,7 +15,7 @@ A data frame with 12,500 rows and 5 variables:
 }
 }
 \usage{
-order_db_funmart
+data(order_db_funmart)
 }
 \description{
 A dataset containing order id, customer id, order date, and order time.

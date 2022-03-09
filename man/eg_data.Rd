@@ -22,7 +22,7 @@ A data frame with 15,459 rows and 9 variables:
 \url{https://www.elgrocer.com}
 }
 \usage{
-eg_data
+data(eg_data)
 }
 \description{
 A dataset containing the names and other attributes of over 15,000 grocery

@@ -15,7 +15,7 @@ A data frame with 131 rows and 2 variables:
 \url{https://www.elgrocer.com}
 }
 \usage{
-eg_location
+data(eg_location)
 }
 \description{
 A dataset contianing the names and links of 131 locations that have grocery

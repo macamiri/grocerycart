@@ -3,7 +3,7 @@
 \docType{data}
 \name{basket_db_funmart}
 \alias{basket_db_funmart}
-\title{Basket/Line item database.}
+\title{Grocery basket database (59,847 line items).}
 \format{
 A data frame with 59,847 rows and 4 variables:
 \describe{
@@ -14,10 +14,10 @@ A data frame with 59,847 rows and 4 variables:
 }
 }
 \usage{
-basket_db_funmart
+data(basket_db_funmart)
 }
 \description{
-A dataset containing basket it, order id, products purchased in each basket
+A dataset containing basket id, order id, products purchased in each basket
 and price of products. Over 59,000 products were bought in all baskets
 combined. The product names and prices were collected from
 \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.

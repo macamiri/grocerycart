@@ -3,7 +3,7 @@
 \docType{data}
 \name{customer_db_funmart}
 \alias{customer_db_funmart}
-\title{Customer database.}
+\title{Customer database (4,991 customers).}
 \format{
 A data frame with 4,991 rows and 6 variables:
 \describe{
@@ -18,7 +18,7 @@ generated via \emph{charlatan}}
 }
 }
 \usage{
-customer_db_funmart
+data(customer_db_funmart)
 }
 \description{
 A dataset containing customer id, name, age, household size and location.

@@ -15,7 +15,7 @@ A data frame with 13 rows and 2 variables:
 \url{https://www.ocado.com}
 }
 \usage{
-oc_category
+data(oc_category)
 }
 \description{
 A dataset containing 13 category names and links.
