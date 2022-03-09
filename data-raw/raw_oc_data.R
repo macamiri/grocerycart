@@ -119,14 +119,16 @@ oc_category <-
   rename("category_link" = link)
 # write_csv(oc_category, here::here("data-raw/oc_category_clean.csv"))
 
-### PRODUCT GENERAL: convert price to # & shelf_life to factor
+### PRODUCT GENERAL: convert shelf_life to factor
+### if price contains p (e.g., 55p) ---> it should be .55
+### if price contains £ (e.g., £55) ---> it should be 55
 ### Same product_link & different category_link = same product
 ### The reason to keep duplicate titles/product_link = different weight or price
 ### Remove duplicates
 oc_product_general <-
   nested_grocery %>%
   unnest_table("oc_product_general") %>%
-  mutate(price = parse_number(price),
+  mutate(price = if_else(str_detect(price, "£"), parse_number(price), parse_number(price) * .01),
          shelf_life = forcats::as_factor(shelf_life)) %>%
   rename("product" = title, "image_link" = images) %>%
   distinct(product, weight, price, product_link, .keep_all = TRUE)
@@ -161,7 +163,7 @@ oc_nutrition_table <-
   oc_nutrition_table %>%
     tibble::enframe(name = "product_link", value = "nutrition") %>%
     distinct(product_link, .keep_all = TRUE) %>%
-    left_join(clean_oc_product_general, by = "product_link") %>%
+    left_join(oc_product_general, by = "product_link") %>%
     select(product_link, nutrition)
 # write_rds(oc_nutrition_table, here::here("data-raw/oc_nutrition_table_clean.rds"))
 
