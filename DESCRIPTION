@@ -21,6 +21,7 @@ Imports:
     stats,
     stringr,
     tibble,
+    tidyr,
     wdman
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -30,3 +31,7 @@ BugReports: https://github.com/moamiristat/grocerycart/issues
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+LazyData: true
+LazyDataCompression:xz
