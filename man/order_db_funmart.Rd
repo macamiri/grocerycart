@@ -5,12 +5,13 @@
 \alias{order_db_funmart}
 \title{Order database (12,500 orders).}
 \format{
-A data frame with 12,500 rows and 5 variables:
+A data frame with 12,500 rows and 6 variables:
 \describe{
 \item{order_id}{unique order id}
 \item{customer_id}{customer id foreign key related to \emph{customer_db_funmart}}
 \item{order_date}{order date}
 \item{order_time}{order time}
+\item{payment_method}{1 of 3 methods used to pay for the order}
 \item{store}{grocery store}
 }
 }
@@ -18,8 +19,8 @@ A data frame with 12,500 rows and 5 variables:
 data(order_db_funmart)
 }
 \description{
-A dataset containing order id, customer id, order date, and order time.
-12,500 orders were randomly generated with the help of
+A dataset containing order id, customer id, order date, payment method
+and order time. 12,500 orders were randomly generated with the help of
 the packages \emph{fabricatr} and \emph{wakefield}.
 }
 \keyword{datasets}

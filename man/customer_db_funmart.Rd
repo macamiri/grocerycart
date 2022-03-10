@@ -3,9 +3,9 @@
 \docType{data}
 \name{customer_db_funmart}
 \alias{customer_db_funmart}
-\title{Customer database (4,991 customers).}
+\title{Customer database (4,996 customers).}
 \format{
-A data frame with 4,991 rows and 6 variables:
+A data frame with 4,996 rows and 6 variables:
 \describe{
 \item{customer_id}{unique customer id}
 \item{customer_name}{customer name generated via \emph{randomNames}}

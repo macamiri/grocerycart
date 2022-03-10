@@ -72,6 +72,16 @@ product_prob <-
   dplyr::mutate(probs = score / sum(score)) %>%
   dplyr::arrange(desc(score))
 
+### Payment method
+# 70% use online payment
+# 20% pay with credit card on delivery
+# 10% pay with cash on delivery
+eg_payment_method <-
+  tibble::tibble(
+    method = c("Online Payment", "Credit Card on delivery", "Cash on delivery"),
+    prob = c(.7, .2, .1)
+  )
+
 ### For 1 store (funmart): 100 products with random probabilities
 product_prob_funmart <-
   tibble::tibble(
@@ -118,6 +128,10 @@ product_prob_funmart <-
 #                              rep(0.004166667, 60),
 #                              rep(0.00375, 40),
 #                              rep(0.005, 20))),
+#   payment_method = sample(x = eg_payment_method$method,
+#                           size = N,
+#                           replace = TRUE,
+#                           prob = eg_payment_method$prob),
 #   store = sample(store_prob$store_name,
 #                  prob = store_prob$probs,
 #                  size = N,
@@ -126,27 +140,27 @@ product_prob_funmart <-
 #   tibble::as_tibble() %>%
 #   dplyr::rename("order_id" = ID)
 # # readr::write_csv(order_db, here::here("data/order_db.csv"))
-#
-#
-# # Basket line item database table - join later if need more product info
-# basket_db <- fabricate(
-#   N = length(customer_db$customer_id),
-#   order_id = as.character(sample(order_db$order_id, size = N, replace = FALSE)),
-#   product = grocerycart::select_products(products = product_prob$product,
-#                                          customer_id = customer_db$customer_id,
-#                                          probs = product_prob$probs,
-#                                          min_products = 10,
-#                                          mean_products = 26,
-#                                          sd_products = 4),
-# ) %>%
-#   tibble::as_tibble() %>%
-#   tidyr::separate_rows(product, sep = "@") %>%
-#   dplyr::left_join(product_prob, by = "product") %>%
-#   dplyr::select(ID, order_id, product, price) %>%
-#   dplyr::rename("basket_id" = ID) %>%
-#   dplyr::distinct(basket_id, product, .keep_all = TRUE)
-#
-# # readr::write_csv(basket_db, here::here("data/basket_db.csv"))
+
+
+# Basket line item database table - join later if need more product info
+basket_db <- fabricate(
+  N = length(customer_db$customer_id),
+  order_id = as.character(sample(order_db$order_id, size = N, replace = FALSE)),
+  product = grocerycart::select_products(products = product_prob$product,
+                                         customer_id = customer_db$customer_id,
+                                         probs = product_prob$probs,
+                                         min_products = 10,
+                                         mean_products = 26,
+                                         sd_products = 4),
+) %>%
+  tibble::as_tibble() %>%
+  tidyr::separate_rows(product, sep = "@") %>%
+  dplyr::left_join(product_prob, by = "product") %>%
+  dplyr::select(ID, order_id, product, price) %>%
+  dplyr::rename("basket_id" = ID) %>%
+  dplyr::distinct(basket_id, product, .keep_all = TRUE)
+
+# readr::write_csv(basket_db, here::here("data/basket_db.csv"))
 
 ##### 5: Generate fake random customer data for 1 store (funmart) ----
 num_of_customers <- 5000
@@ -169,7 +183,7 @@ customer_db_funmart <- fabricate(
 # Orders database table
 order_db_funmart <- fabricate(
   N = num_of_orders,
-  customer_id = as.character(sample(customer_db$customer_id, size = N, replace = TRUE)),
+  customer_id = as.character(sample(customer_db_funmart$customer_id, size = N, replace = TRUE)),
   order_date = date_stamp(n = N,
                           start = as.Date("2020-01-01"),
                           k = 731,
@@ -186,6 +200,10 @@ order_db_funmart <- fabricate(
                              rep(0.004166667, 60),
                              rep(0.00375, 40),
                              rep(0.005, 20))),
+  payment_method = sample(x = eg_payment_method$method,
+                          size = N,
+                          replace = TRUE,
+                          prob = eg_payment_method$prob),
   store = rep("funmart", N),
 ) %>%
   tibble::as_tibble() %>%

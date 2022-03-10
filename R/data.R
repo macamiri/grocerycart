@@ -251,14 +251,14 @@
 #' @source \url{https://www.ocado.com}
 "oc_data"
 
-#' Customer database (4,991 customers).
+#' Customer database (4,996 customers).
 #'
 #' A dataset containing customer id, name, age, household size and location.
 #' Almost 5,000 customer entries were randomly generated with the help of
 #' the packages \emph{charlatan}, \emph{fabricatr}, \emph{randomNames}
 #' and \emph{wakefield}.
 #'
-#' @format A data frame with 4,991 rows and 6 variables:
+#' @format A data frame with 4,996 rows and 6 variables:
 #' \describe{
 #'   \item{customer_id}{unique customer id}
 #'   \item{customer_name}{customer name generated via \emph{randomNames}}
@@ -276,16 +276,17 @@
 
 #' Order database (12,500 orders).
 #'
-#' A dataset containing order id, customer id, order date, and order time.
-#' 12,500 orders were randomly generated with the help of
+#' A dataset containing order id, customer id, order date, payment method
+#' and order time. 12,500 orders were randomly generated with the help of
 #' the packages \emph{fabricatr} and \emph{wakefield}.
 #'
-#' @format A data frame with 12,500 rows and 5 variables:
+#' @format A data frame with 12,500 rows and 6 variables:
 #' \describe{
 #'   \item{order_id}{unique order id}
 #'   \item{customer_id}{customer id foreign key related to \emph{customer_db_funmart}}
 #'   \item{order_date}{order date}
 #'   \item{order_time}{order time}
+#'   \item{payment_method}{1 of 3 methods used to pay for the order}
 #'   \item{store}{grocery store}
 #' }
 #'
@@ -293,14 +294,14 @@
 #' @usage data(order_db_funmart)
 "order_db_funmart"
 
-#' Grocery basket database (59,847 line items).
+#' Grocery basket database (60,067 line items).
 #'
 #' A dataset containing basket id, order id, products purchased in each basket
-#' and price of products. Over 59,000 products were bought in all baskets
+#' and price of products. Over 60,000 products were bought in all baskets
 #' combined. The product names and prices were collected from
 #' \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.
 #'
-#' @format A data frame with 59,847 rows and 4 variables:
+#' @format A data frame with 60,067 rows and 4 variables:
 #' \describe{
 #'   \item{basket_id}{unique basket id}
 #'   \item{order_id}{order id foreign key related to \emph{order_db_funmart}}
