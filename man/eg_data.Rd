@@ -3,7 +3,7 @@
 \docType{data}
 \name{eg_data}
 \alias{eg_data}
-\title{Details for over 15,000 grocery products.}
+\title{Details for over 15,000 grocery products}
 \format{
 A data frame with 15,459 rows and 9 variables:
 \describe{

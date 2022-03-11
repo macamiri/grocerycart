@@ -3,7 +3,7 @@
 \docType{data}
 \name{eg_store}
 \alias{eg_store}
-\title{Grocery stores that provide online delivery services.}
+\title{Grocery stores that provide online delivery services}
 \format{
 A data frame with 184 rows and 11 variables:
 \describe{

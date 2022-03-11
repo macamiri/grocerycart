@@ -3,7 +3,7 @@
 \docType{data}
 \name{oc_product_general}
 \alias{oc_product_general}
-\title{General information for 8,920 grocery products.}
+\title{General information for 8,920 grocery products}
 \format{
 A data frame with 8,920 rows and 7 variables:
 \describe{

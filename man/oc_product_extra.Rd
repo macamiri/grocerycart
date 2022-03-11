@@ -3,7 +3,7 @@
 \docType{data}
 \name{oc_product_extra}
 \alias{oc_product_extra}
-\title{Extra information for 992 grocery products.}
+\title{Extra information for 992 grocery products}
 \format{
 A data frame with 992 rows and 8 variables:
 \describe{

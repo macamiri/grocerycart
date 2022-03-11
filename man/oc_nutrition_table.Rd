@@ -3,7 +3,7 @@
 \docType{data}
 \name{oc_nutrition_table}
 \alias{oc_nutrition_table}
-\title{Nutrition table of 992 grocery products.}
+\title{Nutrition table of 992 grocery products}
 \format{
 A data frame with 992 rows and 2 variables:
 \describe{

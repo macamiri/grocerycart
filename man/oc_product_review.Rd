@@ -3,7 +3,7 @@
 \docType{data}
 \name{oc_product_review}
 \alias{oc_product_review}
-\title{Reviews for 944 grocery products.}
+\title{Reviews for 944 grocery products}
 \format{
 A data frame with 944 rows and 2 variables:
 \describe{

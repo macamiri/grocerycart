@@ -3,7 +3,7 @@
 \docType{data}
 \name{oc_data}
 \alias{oc_data}
-\title{Details for 8,920 grocery products.}
+\title{Details for 8,920 grocery products}
 \format{
 A data frame with 8,920 rows and 17 variables:
 \describe{

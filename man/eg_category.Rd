@@ -3,7 +3,7 @@
 \docType{data}
 \name{eg_category}
 \alias{eg_category}
-\title{Product categories available in different grocery stores.}
+\title{Product categories available in different grocery stores}
 \format{
 A data frame with 3,278 rows and 5 variables:
 \describe{

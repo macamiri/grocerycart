@@ -3,7 +3,7 @@
 \docType{data}
 \name{eg_location}
 \alias{eg_location}
-\title{Names of location areas in UAE.}
+\title{Names of location areas in UAE}
 \format{
 A data frame with 131 rows and 2 variables:
 \describe{

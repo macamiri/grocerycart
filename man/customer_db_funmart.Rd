@@ -3,7 +3,7 @@
 \docType{data}
 \name{customer_db_funmart}
 \alias{customer_db_funmart}
-\title{Customer database (4,996 customers).}
+\title{Customer database (4,996 customers)}
 \format{
 A data frame with 4,996 rows and 6 variables:
 \describe{
