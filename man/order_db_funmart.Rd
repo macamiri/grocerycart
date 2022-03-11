@@ -3,7 +3,7 @@
 \docType{data}
 \name{order_db_funmart}
 \alias{order_db_funmart}
-\title{Order database (12,500 orders).}
+\title{Order database (12,000 orders)}
 \format{
 A data frame with 12,500 rows and 6 variables:
 \describe{
@@ -20,7 +20,18 @@ data(order_db_funmart)
 }
 \description{
 A dataset containing order id, customer id, order date, payment method
-and order time. 12,500 orders were randomly generated with the help of
-the packages \emph{fabricatr} and \emph{wakefield}.
+and order time. 12,000 orders were randomly generated with the help of
+the packages \emph{fabricatr} and \emph{wakefield}. Not every customer
+from the \emph{customer_db_funmart} table might have placed an order.
+}
+\details{
+For example, some customers might have signed up (i.e., input their name,
+email address, age, location, etc) and browsed the app, causing
+them to be added to the customers' database, but they never actually
+completed checkout, so there is no order with their customer id in
+the \emph{order_db_funmart} table.
+}
+\seealso{
+
 }
 \keyword{datasets}
