@@ -5,7 +5,6 @@
 # pacman::p_install("fabricatr", "wakefield", "randomNames", "charlatan",
 #                   "magrittr", "purrr", "readr", "here", "tibble", "dplyr")
 pacman::p_load(fabricatr, wakefield, randomNames, charlatan, magrittr, purrr)
-library(dplyr)
 
 ##### 2: Load grocery data to sample from -----
 data("eg_store")

@@ -26,4 +26,12 @@ Almost 5,000 customer entries were randomly generated with the help of
 the packages \emph{charlatan}, \emph{fabricatr}, \emph{randomNames}
 and \emph{wakefield}.
 }
+\details{
+Not all of the customers necessarily placed an order. For example, some
+customers might have signed up (i.e., input their name,
+email address, age, location, etc) and browsed the app, causing
+them to be added to the customers' database, but they never actually
+completed checkout, so there is no order with their customer id in
+the \emph{order_db_funmart} table.
+}
 \keyword{datasets}

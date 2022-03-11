@@ -258,6 +258,13 @@
 #' the packages \emph{charlatan}, \emph{fabricatr}, \emph{randomNames}
 #' and \emph{wakefield}.
 #'
+#' Not all of the customers necessarily placed an order. For example, some
+#' customers might have signed up (i.e., input their name,
+#' email address, age, location, etc) and browsed the app, causing
+#' them to be added to the customers' database, but they never actually
+#' completed checkout, so there is no order with their customer id in
+#' the \emph{order_db_funmart} table.
+#'
 #' @format A data frame with 4,996 rows and 6 variables:
 #' \describe{
 #'   \item{customer_id}{unique customer id}
