@@ -298,8 +298,8 @@
 #'
 #' A dataset containing basket id, order id, products purchased in each basket
 #' and price of products. Over 60,000 products were bought in all baskets
-#' combined. The product names and prices were collected from
-#' \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.
+#' combined. The product names and prices were collected
+#' from \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.
 #'
 #' @format A data frame with 60,067 rows and 4 variables:
 #' \describe{
