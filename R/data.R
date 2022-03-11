@@ -1,4 +1,4 @@
-#' Names of location areas in UAE.
+#' Names of location areas in UAE
 #'
 #' A dataset contianing the names and links of 131 locations that have grocery
 #' stores that provide online delivery services. A location may contain
@@ -16,7 +16,7 @@
 #' @source \url{https://www.elgrocer.com}
 "eg_location"
 
-#' Grocery stores that provide online delivery services.
+#' Grocery stores that provide online delivery services
 #'
 #' A dataset containing details for 184 grocery stores that provide online
 #' delivery services.
@@ -42,7 +42,7 @@
 #' @source \url{https://www.elgrocer.com}
 "eg_store"
 
-#' Product categories available in different grocery stores.
+#' Product categories available in different grocery stores
 #'
 #' A dataset containing 3,278 product categories in different grocery stores.
 #'
@@ -61,7 +61,7 @@
 #' @source \url{https://www.elgrocer.com}
 "eg_category"
 
-#' Product subcategories available in different grocery stores.
+#' Product subcategories available in different grocery stores
 #'
 #' A dataset containing 1,156 product subcategories chosen randomly from 300
 #' categories in different grocery stores.
@@ -79,7 +79,7 @@
 #' @source \url{https://www.elgrocer.com}
 "eg_subcategory"
 
-#' Details for 15,459 grocery products.
+#' Details for 15,459 grocery products
 #'
 #' A dataset containing the name, weight, price and image link of more
 #' than 15,000 grocery products.
@@ -99,7 +99,7 @@
 #' @source \url{https://www.elgrocer.com}
 "eg_product"
 
-#' Details for over 15,000 grocery products.
+#' Details for over 15,000 grocery products
 #'
 #' A dataset containing the names and other attributes of over 15,000 grocery
 #' products. This table was built by joining \emph{eg_product},
@@ -126,7 +126,7 @@
 
 #' Grocery products categories.
 #'
-#' A dataset containing 13 category names and links.
+#' A dataset containing 13 category names and links
 #'
 #' @format A data frame with 13 rows and 2 variables:
 #' \describe{
@@ -140,7 +140,7 @@
 #' @source \url{https://www.ocado.com}
 "oc_category"
 
-#' General information for 8,920 grocery products.
+#' General information for 8,920 grocery products
 #'
 #' A dataset containing the general information for almost 9,000 grocery
 #' products.
@@ -162,7 +162,7 @@
 #' @source \url{https://www.ocado.com}
 "oc_product_general"
 
-#' Extra information for 992 grocery products.
+#' Extra information for 992 grocery products
 #'
 #' A dataset containing extra information (e.g., rating, brand)
 #' for almost 1,000 grocery products.
@@ -185,7 +185,7 @@
 #' @source \url{https://www.ocado.com}
 "oc_product_extra"
 
-#' Reviews for 944 grocery products.
+#' Reviews for 944 grocery products
 #'
 #' A dataset containing the reviews for almost 1,000 grocery products.
 #'
@@ -201,7 +201,7 @@
 #' @source \url{https://www.ocado.com}
 "oc_product_review"
 
-#' Nutrition table of 992 grocery products.
+#' Nutrition table of 992 grocery products
 #'
 #' A dataset containing the nutrition tables for almost 1,000 grocery products.
 #'
@@ -217,7 +217,7 @@
 #' @source \url{https://www.ocado.com}
 "oc_nutrition_table"
 
-#' Details for 8,920 grocery products.
+#' Details for 8,920 grocery products
 #'
 #' A dataset containing the names and other attributes of almost 9,000 grocery
 #' products. This table was built by joining \emph{oc_product_general},
@@ -251,7 +251,7 @@
 #' @source \url{https://www.ocado.com}
 "oc_data"
 
-#' Customer database (4,996 customers).
+#' Customer database (4,996 customers)
 #'
 #' A dataset containing customer id, name, age, household size and location.
 #' Almost 5,000 customer entries were randomly generated with the help of
@@ -274,11 +274,18 @@
 #' @usage data(customer_db_funmart)
 "customer_db_funmart"
 
-#' Order database (12,500 orders).
+#' Order database (12,000 orders)
 #'
 #' A dataset containing order id, customer id, order date, payment method
-#' and order time. 12,500 orders were randomly generated with the help of
-#' the packages \emph{fabricatr} and \emph{wakefield}.
+#' and order time. 12,000 orders were randomly generated with the help of
+#' the packages \emph{fabricatr} and \emph{wakefield}. Not every customer
+#' from the \emph{customer_db_funmart} table might have placed an order.
+#'
+#' For example, some customers might have signed up (i.e., input their name,
+#' email address, age, location, etc) and browsed the app, causing
+#' them to be added to the customers' database, but they never actually
+#' completed checkout, so there is no order with their customer id in
+#' the \emph{order_db_funmart} table.
 #'
 #' @format A data frame with 12,500 rows and 6 variables:
 #' \describe{
@@ -292,16 +299,26 @@
 #'
 #' @name order_db_funmart
 #' @usage data(order_db_funmart)
+#'
+#' @seealso
+#'
 "order_db_funmart"
 
-#' Grocery basket database (60,067 line items).
+#' Grocery basket database (144,159 line items)
 #'
 #' A dataset containing basket id, order id, products purchased in each basket
-#' and price of products. Over 60,000 products were bought in all baskets
-#' combined. The product names and prices were collected
+#' and price of products. There were 200 products, with different
+#' probabilities for each, to select from in the fake grocery
+#' store, 'funmart'. Over 140,000 products were bought in all baskets
+#' combined. The customer ids were sampled
+#' from the \emph{order_db_funmart} table (not \emph{customer_db_funmart})
+#' to ensure that only customers that actually placed an order appear
+#' in the \emph{basket_db_funmart} table.
+#'
+#' The product names and prices were collected
 #' from \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.
 #'
-#' @format A data frame with 60,067 rows and 4 variables:
+#' @format A data frame with 144,159 rows and 4 variables:
 #' \describe{
 #'   \item{basket_id}{unique basket id}
 #'   \item{order_id}{order id foreign key related to \emph{order_db_funmart}}

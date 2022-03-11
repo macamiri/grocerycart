@@ -5,6 +5,7 @@
 # pacman::p_install("fabricatr", "wakefield", "randomNames", "charlatan",
 #                   "magrittr", "purrr", "readr", "here", "tibble", "dplyr")
 pacman::p_load(fabricatr, wakefield, randomNames, charlatan, magrittr, purrr)
+library(dplyr)
 
 ##### 2: Load grocery data to sample from -----
 data("eg_store")
@@ -164,9 +165,9 @@ basket_db <- fabricate(
 
 ##### 5: Generate fake random customer data for 1 store (funmart) ----
 num_of_customers <- 5000
-num_of_orders <- 12500
+num_of_orders <- 12000
 
-# Customer database table - keep distinct names
+### Customer database table - keep distinct names
 customer_db_funmart <- fabricate(
   N = num_of_customers,
   customer_name = randomNames(n = N, name.sep = " ", name.order = "first.last"),
@@ -180,7 +181,7 @@ customer_db_funmart <- fabricate(
   dplyr::rename("customer_id" = ID)
 # readr::write_csv(customer_db_funmart, here::here("data/customer_db_funmart.csv"))
 
-# Orders database table
+### Orders database table (1)
 order_db_funmart <- fabricate(
   N = num_of_orders,
   customer_id = as.character(sample(customer_db_funmart$customer_id, size = N, replace = TRUE)),
@@ -210,13 +211,12 @@ order_db_funmart <- fabricate(
   dplyr::rename("order_id" = ID)
 # readr::write_csv(order_db_funmart, here::here("data/order_db_funmart.csv"))
 
-
-# Basket line item database table - join later if need more product info
+### Basket line item database table - join later if need more product info
 basket_db_funmart <- fabricate(
-  N = length(customer_db_funmart$customer_id),
+  N = length(order_db_funmart$order_id),
   order_id = as.character(sample(order_db_funmart$order_id, size = N, replace = FALSE)),
   product = grocerycart::select_products(products = product_prob_funmart$product,
-                                         customer_id = customer_db_funmart$customer_id,
+                                         customer_id = order_db_funmart$customer_id,
                                          probs = product_prob_funmart$probs,
                                          min_products = 3,
                                          mean_products = 12,
@@ -228,8 +228,17 @@ basket_db_funmart <- fabricate(
   dplyr::select(ID, order_id, product, price) %>%
   dplyr::rename("basket_id" = ID) %>%
   dplyr::distinct(basket_id, product, .keep_all = TRUE)
-
 # readr::write_csv(basket_db_funmart, here::here("data/basket_db_funmart.csv"))
+
+### Orders database table (2)
+# In the event that a customer_id from the order_db_funmart table was not
+# selected in the basket_db_funmart table ---> drop the order from the
+# order_db_funmart table. The rational for this is that since there are is
+# no basket data in basket_db_funmart for a specific order ---> drop it from
+# order_db_funmart and assume the order never existed.
+order_db_funmart <-
+  order_db_funmart %>%
+    dplyr::semi_join(basket_db_funmart, by = "order_id")
 
 ##### 6: Add data files to package ------
 # usethis::use_data(customer_db, overwrite = TRUE, compress = "xz")
