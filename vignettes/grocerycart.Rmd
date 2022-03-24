@@ -105,6 +105,9 @@ that delivers via elGrocer.
 ```{r eg-collect-location-link}
 eg_location <- eg_collect_location_links(remDr = remDr, url = "https://www.elgrocer.com")
 ```
+```{r eg-location-link, eval = TRUE}
+eg_location[1:3,]
+```
 
 Next, let's collect the store details from 5 locations. The store details 
 data is only visible after clicking on the 'i' icon for a store. To see an 
@@ -121,6 +124,10 @@ code below.
 ```{r eg-collect-store-details}
 eg_store <- eg_collect_stores_details(remDr, eg_location$location_link[1:5])
 ```
+```{r eg-store, eval = TRUE}
+eg_store[1:3,]
+```
+
 
 Next, let's collect the product categories available in 3 stores. Notice that 
 one of the arguments used is the 
@@ -130,6 +137,9 @@ internally in the `eg_collect_subcategories` function mentioned next.
 
 ```{r eg-collect-categories}
 eg_category <- eg_collect_categories(remDr, eg_store$store_link[1:3])
+```
+```{r eg-categories, eval = TRUE}
+eg_category[1:3,]
 ```
 
 Next, let's grab 3 subcategories from the categories that were returned from 
@@ -143,6 +153,9 @@ random_category_links <- sample(x = 1:length(eg_category$category_link),
 
 eg_subcategory <- eg_collect_subcategories(remDr, 
                                            eg_category$category_link[random_category_links])
+```
+```{r eg-subcategories, eval = TRUE}
+eg_subcategory[1:3,]
 ```
 
 Finally, let's collect product data from 2 subcategories. The function uses 
@@ -159,6 +172,10 @@ random_subcategory_links <- sample(x = 1:length(eg_subcategory$subcategory_link)
 eg_item <- eg_collect_items(remDr, 
                             eg_subcategory$subcategory_link[random_subcategory_links])
 ```
+```{r eg-items, eval = TRUE}
+eg_product[1:3,]
+```
+
 
 ## Collect Data from Ocado
 The 5 functions that are used to scrape different parts of 
@@ -174,6 +191,9 @@ First, let's grab the category links from the dropdown menu.
 ```{r oc-collect-categories}
 oc_category <- oc_collect_categories(remDr = remDr)
 ```
+```{r oc-categories, eval = TRUE}
+oc_category[1:3,]
+```
 
 Now we can collect general product details (i.e., name, price, image). This 
 function interacts with the javascript elements on the webpage (i.e., 
@@ -188,6 +208,9 @@ chosen_category_links <- 7
 
 oc_product_general <- oc_collect_product_general(oc_category$link[chosen_category_links])
 ```
+```{r oc-product-general, eval = TRUE}
+oc_product_general[1:3,]
+```
 
 We can also collect extra product data such as the country of origin and 
 rating. We will do that for 3 random products in the code below.  
@@ -199,6 +222,9 @@ random_product_links <- sample(x = 1:length(oc_product_general$product_link),
 
 oc_product_extra <- oc_collect_product_extra(-oc_product_general$product_link[random_product_links[1:3]])
 ```
+```{r oc-product-extra, eval = TRUE}
+oc_product_extra[1:3,]
+```
 
 If a product has reviews, then we can collect those too. The function will 
 check how many times it needs to click on the next arrow ('>') in order to 
@@ -209,6 +235,9 @@ print to the console how many reviews the function has found.
 ```{r oc-collect-product-reviews}
 oc_product_review <- oc_collect_product_reviews(oc_product_general$product_link[random_product_links[1:3]])
 ```
+```{r oc-product-review, eval = TRUE}
+oc_product_review[1:3,]
+```
 
 Finally, it is also possible to grab the nutrition table, if it exists, 
 associated with the products. If it does not exist, then the function returns 
@@ -216,6 +245,9 @@ associated with the products. If it does not exist, then the function returns
 
 ```{r oc-collect-nutrition-table}
 oc_nutrition_table <- oc_collect_nutrition_table(oc_product_general$product_link[random_product_links[1:3]])
+```
+```{r oc-nutrition-table, eval = TRUE}
+oc_nutrition_table[1:3,]
 ```
 
 ## Close Selenium Server
