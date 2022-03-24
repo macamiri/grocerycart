@@ -1,0 +1,246 @@
+---
+title: "Introduction to grocerycart"
+description: |
+  Collect, clean and analyze grocery data.
+author: "Mo"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to grocerycart}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  eval = FALSE
+)
+```
+
+The goal of the **grocerycart** package is to provide:  
+1. A group of functions that:  
+    *  Collect/Scrape data from 2 online grocery services: 
+    [elGrocer](https://www.elgrocer.com) & [Ocado](https://www.ocado.com).  
+    *  Clean the collected data from the 2 websites.  
+    *  Analyze the cleaned data.  
+2. Datasets containing details from real grocery stores (e.g., products, prices, reviews).  
+3. Ready to use grocery data: customer, order and basket datasets generated using 
+real products. See more info in this vignette on how to quickly generate more grocery 
+store data.  
+
+*NOTE*: This package was created as a way to organize the functions that were 
+created for...
+
+## Initiate Selenium Server
+```{r message = FALSE, eval = TRUE}
+library(grocerycart)
+```
+
+```{r initiate-server}
+remDr <- RSelenium::rsDriver(port = netstat::free_port(), 
+                             browser = "firefox", 
+                             verbose = FALSE)$client
+```
+
+*NOTE*: In order to play nice with the 2 websites, the scraper functions have
+a built in 'sleep functionality'. This means that the functions will 
+suspend execution (i.e., go to sleep) for a random time interval, usually 
+between 5 and 10 seconds whenever the sleep function, *nytnyt*, is 
+called.  
+
+## Collect Data from elGrocer
+
+The 5 functions that are used to scrape different parts of 
+the [elGrocer](https://www.elgrocer.com) website all have the same 
+pre-fix **eg_collect_***. Use them in the chronological order presented 
+below. The name of the function indicates the type of data that is scraped 
+and returned (e.g., eg_collect_categories scrapes/returns category data). 
+These functions are verbose, allowing the user to get a sense of 
+the progress being made.  
+
+First, let's grab the links for the locations/areas that contain a store 
+that delivers via elGrocer.
+
+```{r eg-collect-location-link}
+eg_location <- eg_collect_location_links(remDr = remDr, url = "https://www.elgrocer.com")
+```
+
+Next, let's collect the store details from 5 locations. The store details 
+data is only visible after clicking on the 'i' icon for a store. To see an 
+example of this, visit 
+the [JLT grocery stores webpage](https://elgrocer.com/stores/dubai/jlt) and 
+then click on the 'i' icon next to the store card. This will reveal the data 
+that the function below collects (i.e., minimum order amount).  
+
+Notice that one of the arguments used is the 
+*column of location links that was collected above*. 
+To scrape the store details from all locations, simply drop '[1:5]' from the 
+code below.  
+
+```{r eg-collect-store-details}
+eg_store <- eg_collect_stores_details(remDr, eg_location$location_link[1:5])
+```
+
+Next, let's collect the product categories available in 3 stores. Notice that 
+one of the arguments used is the 
+*column of store links that was collected above*.  
+
+```{r eg-collect-categories}
+eg_category <- eg_collect_categories(remDr, eg_store$store_link[1:3])
+```
+
+Next, let's grab 3 subcategories from the categories that were returned from 
+the function above.  
+
+```{r eg-collect-subcategories}
+# Randomly choose 3 categories to collect the subcategories from
+random_category_links <- sample(x = 1:length(eg_category$category_link), 
+                                size = 3, 
+                                replace = FALSE)
+
+eg_subcategory <- eg_collect_subcategories(remDr, 
+                                           eg_category$category_link[random_category_links])
+```
+
+Finally, let's collect product data from 2 subcategories.  
+
+```{r eg-collect-items}
+# Randomly choose 2 subcategories to collect the product data from
+random_subcategory_links <- sample(x = 1:length(eg_subcategory$subcategory_link), 
+                                   size = 2, 
+                                   replace = FALSE)
+
+eg_item <- eg_collect_items(remDr, 
+                            eg_subcategory$subcategory_link[random_subcategory_links])
+```
+
+## Collect Data from Ocado
+
+The 5 functions that are used to scrape different parts of 
+the [Ocado](https://www.ocado.com) website all have the same 
+pre-fix **oc_collect_***. Use them in the chronological order presented 
+below. The name of the function indicates the type of data that is scraped 
+and returned (e.g., oc_collect_product_reviews scrapes/returns product 
+reviews). These functions are verbose, allowing the user to get a sense of 
+the progress being made.  
+
+First, let's grab the category links.
+
+```{r oc-collect-categories}
+oc_category <- oc_collect_categories(remDr = remDr)
+```
+
+Now we can collect general product details (i.e., name, price, image). This 
+function interacts with the javascript elements on the webpage (i.e., 
+click on 'show more' until there's no more 'show more') and 
+slowly scrolls down and up the webpage in order to ensure that all products 
+are loaded before collection the data.  
+
+Here, we will collect the data from 1 category.  
+
+```{r oc-collect-product-general}
+chosen_category_links <- 7
+
+oc_product_general <- oc_collect_product_general(oc_category$link[chosen_category_links])
+```
+
+We can also collect extra product data such as the country of origin and 
+rating. We will do that for 3 random products in the code below.  
+
+```{r oc-collect-product-extra}
+random_product_links <- sample(x = 1:length(oc_product_general$product_link), 
+                               size = 3, 
+                               replace = FALSE)
+
+oc_product_extra <- oc_collect_product_extra(-oc_product_general$product_link[random_product_links[1:3]])
+```
+
+If a product has reviews, then we can collect those too.  
+
+```{r oc-collect-product-reviews}
+oc_product_review <- oc_collect_product_reviews(oc_product_general$product_link[random_product_links[1:3]])
+```
+
+Finally, it is also possible to grab the nutrition table associated 
+with the products.  
+
+```{r oc-collect-nutrition-table}
+oc_nutrition_table <- oc_collect_nutrition_table(oc_product_general$product_link[random_product_links[1:3]])
+```
+
+## Close Selenium Server
+```{r close-server}
+remDr$close()
+gc(remDr)
+rm(remDr)
+```
+
+## Cleaning Functions
+A lot of the data cleaning process can be handled with the 
+[dplyr](https://dplyr.tidyverse.org) package. 
+However, some data wrangling functions were created specifically to clean the 
+data that is scraped from the 2 websites above. 
+
+For example, the 2 functions *extract_energy* and *extract_kcal* can be 
+used sequentially to extract the number of kcals of a product from its 
+nutrition table (even if the calories are in kJ).  
+```{r collect-product-kcals}
+# Extract product kcals frm nutrition table
+data("oc_data")
+calories <- extract_energy(oc_data, item = "product", nutrition = "nutrition")
+kcal <- extract_kcal(calories)
+```
+
+## Collected Datasets
+The elGrocer and Ocado websites were partially scraped and the data collected 
+was put into different tibbles that can be further analyzed (e.g., joined and plotted).  
+
+Data collected from elGrocer have the pre-fix **eg_***, while data from 
+Ocado have the pre-fix **oc_**. For more info, view the help page for 
+each one (e.g., ?oc_data). Listed below are the available datasets in this package.  
+
+### elGrocer Data
+1. **eg_location**: A dataset contianing the names and links of 131 locations that 
+have grocery stores that provide online delivery services.  
+2. **eg_store**: A dataset containing details for 184 grocery stores that 
+provide online delivery services.  
+3. **eg_category**: A dataset containing 3,278 product categories in different 
+grocery stores.  
+4. **eg_subcategory**: A dataset containing 1,156 product subcategories chosen 
+randomly from 300 categories in different grocery stores.  
+5. **eg_product**: A dataset containing the name, weight, price and image link 
+of more than 15,000 grocery products.  
+6. **eg_data**: A dataset containing the names and other attributes of over 
+15,000 grocery products. This table was built by 
+joining *eg_product*, *eg_subcategory* and *eg_category*.  
+
+### Ocado Data
+1. **oc_category**: A dataset containing 13 category names and links.  
+2. **oc_product_general**: A dataset containing the general information for 
+almost 9,000 grocery products.  
+3. **oc_product_extra**: A dataset containing extra information 
+(e.g., rating, brand) for almost 1,000 grocery products.  
+4. **oc_product_review**: A dataset containing the reviews for almost 
+1,000 grocery products.  
+5. **oc_nutrition_table**: A dataset containing the nutrition tables for 
+almost 1,000 grocery products.  
+6. **oc_dat**a: A dataset containing the names and other attributes of almost 9,000 grocery products. This table was built by joining *oc_product_general*, *oc_product_extra*, 
+*oc_category*, and *oc_product_review* and *oc_nutrition_table*.  
+
+## Available Grocery Store Data  
+Datasets were generated to mimic 3 simple databases of a fake grocery store, 
+which we call 'funmart':  
+1. **customer_db_funmart**: A dataset containing customer id, name, age, 
+household size and location (4,996 customers).  
+2. **order_db_funmart**: A dataset containing order id, customer id, 
+order date, payment method and order time (12,000 orders).  
+3. **basket_db_funmart**: A dataset containing basket id, order id, products 
+purchased in each basket and price of products. There were 200 products, 
+with different probabilities for each, to select from in the fake grocery 
+store, 'funmart'. Over 140,000 products were bought in all baskets combined.  
+
+### Generate Grocery Store Data   
+While these datasets are available in the package, you are able to generate 
+more grocery store data to use in your anlysis using the R shiny app 
+associated with this project: ...  
