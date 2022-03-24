@@ -124,9 +124,9 @@
 #' @source \url{https://www.elgrocer.com}
 "eg_data"
 
-#' Grocery products categories.
+#' Grocery products categories
 #'
-#' A dataset containing 13 category names and links
+#' A dataset containing 13 category names and links.
 #'
 #' @format A data frame with 13 rows and 2 variables:
 #' \describe{

@@ -10,16 +10,17 @@
 #' less than 11 seconds whenever the sleep function, \emph{nytnyt}, is
 #' called. See the \emph{vignette} for more information.
 #'
-#' These functions are verbose, allowing the user to get a sense of progress.
+#' These functions are verbose, allowing the user to get a sense of the
+#' progress being made.
 #'
 #' @seealso
-#' \code{\link{oc_collect_categories}} for elgrocer data collection.
+#' \code{\link{oc_collect_categories}} for data collection from Ocado.
 #' \code{\link{nytnyt}} for sleep functionality.
 #'
 #' @param remDr Remote client driver
 #' @param url elgrocer url
 #'
-#' @return \code{*_location_links}:Tibble with the URL for each location
+#' @return \code{*_location_links}: Tibble with the URL for each location
 #'
 #' @export
 #'
@@ -44,7 +45,7 @@
 #' eg_subcategory <- eg_collect_subcategories(remDr,
 #' eg_category$category_link[random_category_links])
 #'
-#' # Collect product data from 2 subcategories
+#' # (E) Collect product data from 2 subcategories
 #' random_subcategory_links <- sample(1:length(eg_subcategory$subcategory_link),
 #' 2, replace = FALSE)
 #' eg_item <- eg_collect_items(remDr,
@@ -64,12 +65,12 @@ eg_collect_location_links <- function(remDr = remDr,
                       "Make sure page loads \n")
   grocerycart::get_page_title(remDr)
 
-  # 131 total locations
+  # Grab location names
   locations <- grocerycart::get_html_elements(remDr,
                                               css = ".text-success",
                                               type = "text")
 
-  # Collect 131 location links
+  # Collect location links
   location_links_extensions <- grocerycart::get_html_elements(remDr,
                                                               css = ".text-success",
                                                               type = "attribute",

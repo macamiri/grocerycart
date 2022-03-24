@@ -10,7 +10,8 @@
 #' less than 11 seconds whenever the sleep function, \emph{nytnyt}, is
 #' called. See the \emph{vignette} for more information.
 #'
-#' These functions are verbose, allowing the user to get a sense of progress.
+#' These functions are verbose, allowing the user to get a sense of the
+#' progress being made.
 #'
 #' @seealso
 #' \code{\link{eg_collect_location_links}} for ocado data collection.
