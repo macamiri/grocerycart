@@ -31,10 +31,13 @@ BugReports: https://github.com/moamiristat/grocerycart/issues
 Suggests: 
     rmarkdown,
     knitr,
+    prettydoc,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: 
     R (>= 2.10)
 LazyData: true
 LazyDataCompression: xz
-VignetteBuilder: knitr
+VignetteBuilder: 
+    knitr,
+    rmarkdown
