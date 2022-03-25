@@ -3,7 +3,7 @@
 \docType{data}
 \name{oc_category}
 \alias{oc_category}
-\title{Grocery products categories.}
+\title{Grocery products categories}
 \format{
 A data frame with 13 rows and 2 variables:
 \describe{
@@ -18,6 +18,6 @@ A data frame with 13 rows and 2 variables:
 data(oc_category)
 }
 \description{
-A dataset containing 13 category names and links
+A dataset containing 13 category names and links.
 }
 \keyword{datasets}
