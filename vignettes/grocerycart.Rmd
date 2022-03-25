@@ -3,7 +3,8 @@ title: "Introduction to grocerycart"
 description: |
   Collect, clean and analyze grocery data.
 author: "Mo"
-output: rmarkdown::html_vignette
+date: "Last compiled on `r format(Sys.time(), '%B %d, %Y')`"
+output: prettydoc::html_pretty
 vignette: >
   %\VignetteIndexEntry{Introduction to grocerycart}
   %\VignetteEngine{knitr::rmarkdown}
