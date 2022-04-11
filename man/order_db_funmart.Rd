@@ -31,7 +31,4 @@ them to be added to the customers' database, but they never actually
 completed checkout, so there is no order with their customer id in
 the \emph{order_db_funmart} table.
 }
-\seealso{
-
-}
 \keyword{datasets}
