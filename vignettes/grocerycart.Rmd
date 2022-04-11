@@ -327,7 +327,7 @@ oc_data[5006:5010,] %>% str()
 
 
 ## Available Grocery Store Data  
-These datasets were generated to mimic 3 simple databases of a fake 
+These datasets were generated to mimic simple databases of a fake 
 grocery store, which we will call 'funmart':  
 1. `customer_db_funmart`: customer id, name, age, household size and 
 location (4,996 customers).  
@@ -337,6 +337,8 @@ and order time (12,000 orders).
 basket and price of products. There were 200 products, 
 with different probabilities for each, to select from in the fake grocery 
 store, 'funmart'. Over 140,000 products were bought in all baskets combined.  
+4. `grocery_cart`: grocery dataset that was created by joining the 3 databases 
+above.  
 
 #### Generate Your Own Grocery Store Data   
 While the 3 datasets above are available in the package, you are able to 

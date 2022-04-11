@@ -89,7 +89,7 @@ product_prob_funmart <-
     dplyr::mutate(probs = probs(j = 200))
 
 
-##### 4: Generate large fake random customer data -----
+##### 4: Generate large fake random customer data (deprecated) -----
 # num_of_customers <- 100000
 # num_of_orders <- 250000
 #
@@ -239,6 +239,15 @@ order_db_funmart <-
   order_db_funmart %>%
     dplyr::semi_join(basket_db_funmart, by = "order_id")
 
+##### 6: Combine the databases from #5 for basket analysis (funmart)
+grocery_data <-
+  basket_db_funmart %>%
+    group_by(basket_id, order_id) %>%
+    summarise(cost = sum(price)) %>%
+    ungroup() %>%
+    inner_join(order_db_funmart, by = "order_id") %>%
+    inner_join(customer_db_funmart, by = "customer_id")
+
 ##### 6: Add data files to package ------
 # usethis::use_data(customer_db, overwrite = TRUE, compress = "xz")
 # usethis::use_data(order_db, overwrite = TRUE, compress = "xz")
@@ -246,3 +255,4 @@ order_db_funmart <-
 usethis::use_data(customer_db_funmart, overwrite = TRUE, compress = "xz")
 usethis::use_data(order_db_funmart, overwrite = TRUE, compress = "xz")
 usethis::use_data(basket_db_funmart, overwrite = TRUE, compress = "xz")
+usethis::use_data(grocery_data, overwrite = TRUE, compress = "xz")

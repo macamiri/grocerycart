@@ -306,9 +306,6 @@
 #'
 #' @name order_db_funmart
 #' @usage data(order_db_funmart)
-#'
-#' @seealso
-#'
 "order_db_funmart"
 
 #' Grocery basket database (144,159 line items)
@@ -336,3 +333,51 @@
 #' @name basket_db_funmart
 #' @usage data(basket_db_funmart)
 "basket_db_funmart"
+
+#' Grocery data ready for analysis (12,000 orders)
+#'
+#' A dataset created by joining the 3 databases associated with this package:
+#' \emph{customer_db_funmart}, \emph{order_db_funmart}
+#' and \emph{basket_db_funmart}. View the example section below to see how
+#' this dataset was created.
+#'
+#' The product names and prices were collected
+#' from \url{https://www.ocado.com} and \url{https://www.elgrocer.com}.
+#'
+#' @format A data frame with 12,000 rows and 13 variables:
+#' \describe{
+#'   \item{basket_id}{unique basket id}
+#'   \item{order_id}{order id foreign key related to \emph{order_db_funmart}}
+#'   \item{cost}{total price of an order}
+#'   \item{customer_id}{unique customer id}
+#'   \item{order_date}{order date}
+#'   \item{order_time}{order time}
+#'   \item{payment_method}{1 of 3 methods used to pay for the order}
+#'   \item{store}{grocery store}
+#'   \item{customer_name}{customer name generated via \emph{randomNames}}
+#'   \item{customer_age}{customer age generated via \emph{wakefield}, 18 to 75}
+#'   \item{household_size}{household size generated via \emph{wakefield}, 1 to 7}
+#'   \item{long}{longitude of customers' delivery address in the UAE
+#'   generated via \emph{charlatan}}
+#'   \item{lat}{latitude of customers' delivery address in the UAE
+#'   generated via \emph{charlatan}}
+#' }
+#'
+#' @name grocery_data
+#' @usage data(grocery_data)
+#'
+#' @seealso
+#' \code{\link{customer_db_funmart}}, \code{\link{order_db_funmart}},
+#' and \code{\link{basket_db_funmart}}.
+#'
+#' @examples
+#' \dontrun{
+#' grocery_data <-
+#' basket_db_funmart %>%
+#' group_by(basket_id, order_id) %>%
+#' summarise(cost = sum(price)) %>%
+#' ungroup() %>%
+#' inner_join(order_db_funmart, by = "order_id") %>%
+#' inner_join(customer_db_funmart, by = "customer_id")
+#' }
+"grocery_data"
