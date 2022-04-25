@@ -268,9 +268,9 @@
 #' @format A data frame with 4,996 rows and 6 variables:
 #' \describe{
 #'   \item{customer_id}{unique customer id}
-#'   \item{customer_name}{customer name generated via \emph{randomNames}}
-#'   \item{customer_age}{customer age generated via \emph{wakefield}, 18 to 75}
-#'   \item{household_size}{household size generated via \emph{wakefield}, 1 to 7}
+#'   \item{customer_name}{random first and last name. Generated via \emph{randomNames}}
+#'   \item{customer_age}{random age from 18 to 75. Generated via \emph{wakefield}}
+#'   \item{household_size}{random number of people (1 to 7) living with customer (including customer). Generated via \emph{wakefield}}
 #'   \item{long}{longitude of customers' delivery address in the UAE
 #'   generated via \emph{charlatan}}
 #'   \item{lat}{latitude of customers' delivery address in the UAE
@@ -298,7 +298,7 @@
 #' \describe{
 #'   \item{order_id}{unique order id}
 #'   \item{customer_id}{customer id foreign key related to \emph{customer_db_funmart}}
-#'   \item{order_date}{order date}
+#'   \item{order_date}{day, month and year of order}
 #'   \item{order_time}{order time}
 #'   \item{payment_method}{1 of 3 methods used to pay for the order}
 #'   \item{store}{grocery store}
@@ -350,13 +350,13 @@
 #'   \item{order_id}{order id foreign key related to \emph{order_db_funmart}}
 #'   \item{cost}{total price of an order}
 #'   \item{customer_id}{unique customer id}
-#'   \item{order_date}{order date}
+#'   \item{order_date}{day, month and year of order}
 #'   \item{order_time}{order time}
 #'   \item{payment_method}{1 of 3 methods used to pay for the order}
 #'   \item{store}{grocery store}
-#'   \item{customer_name}{customer name generated via \emph{randomNames}}
-#'   \item{customer_age}{customer age generated via \emph{wakefield}, 18 to 75}
-#'   \item{household_size}{household size generated via \emph{wakefield}, 1 to 7}
+#'   \item{customer_name}{random first and last name. Generated via \emph{randomNames}}
+#'   \item{customer_age}{random age from 18 to 75. Generated via \emph{wakefield}}
+#'   \item{household_size}{random number of people (1 to 7) living with customer (including customer). Generated via \emph{wakefield}}
 #'   \item{long}{longitude of customers' delivery address in the UAE
 #'   generated via \emph{charlatan}}
 #'   \item{lat}{latitude of customers' delivery address in the UAE
