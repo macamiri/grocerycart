@@ -24,13 +24,12 @@ You may want to use this package for 1 of 2 reasons:
 Learn how you can scrape, clean and analyze grocery data with the functions in this package via `vignette("grocerycart")`.
 
 ## Data
-You can view all the available datasets via `data(package = "grocerycart")`.
+You can view all 16 available datasets via `data(package = "grocerycart")`. Get more info about each dataset via `?*DatasetNAME*`.
 
 ## Analysis
 Here are examples of visualizations that can be created using the dataset in this package:
 
-<img src="most-reviewed-plot.jpg" height="400px" />
-<img src="most-expensive-plot.jpg" height="400px" />
+<img src="most-reviewed-plot.jpg" height="400px" /> <img src="most-expensive-plot.jpg" height="400px" />
 
 <img src="table.jpg" height="300px" />
 
