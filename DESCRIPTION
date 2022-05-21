@@ -1,5 +1,5 @@
 Package: grocerycart
-Title: Collect Grocery Data from elGrocer & Ocado
+Title: Collect, Clean & Analyze Grocery Data from elGrocer & Ocado
 Version: 0.0.0.9000
 Authors@R: 
     person("Mo", "Amiri", , "moamiristat@protonmail.com", role = c("aut", "cre"))
