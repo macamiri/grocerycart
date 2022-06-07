@@ -2,7 +2,7 @@
 title: "Introduction to grocerycart"
 description: |
   Collect, clean and analyze grocery data.
-author: "Mo"
+author: "MoAmiriStat"
 date: "Last compiled on `r format(Sys.time(), '%B %d, %Y')`"
 output: prettydoc::html_pretty
 vignette: >
@@ -91,7 +91,15 @@ by the `runif()` function) after collecting reviews from a product's webpage.
 The 5 functions that are used to scrape different parts of 
 the [elGrocer](https://www.elgrocer.com) website all have the same 
 pre-fix `eg_collect_*`. Use them in the chronological order presented 
-below.
+below.  
+
+Consistent features for all collector/scraper functions:  
++ Functional Programming: via the `map()` function in the `purrr` package  
++ Output: returns a tibble/table of the data collected  
++ Verbose: `cat` and `crayon` packages print to the console the progress
+being made  
++ Beep: `beepr` package sounds a ‘Work Complete’ audio once the required
+data is collected
 
 The name of the function indicates the type of data that is scraped 
 and returned (e.g., `eg_collect_categories()` scrapes/returns category data). 
@@ -160,7 +168,17 @@ eg_item <- eg_collect_items(remDr,
 eg_product[1:3,]
 ```
 
-That is what you need to know to successfully scrape the elGrocer website for grocery data.
+That is what you need to know to successfully scrape the elGrocer website for grocery data. Here's a summary of elGrocer data collected:  
++ Location (UAE) of grocery stores that elGrocer delivers from  
++ Details of each store (i.e., delivery times, minimum order amount)  
++ Random categories & subcategories of products available in each store
++ All 3,279 listed distinct categories    
++ Subcategory data was collected from 300 randomly chosen categories
+(from total of 3289). 1164 subcategories were collected  
++ Product details for 17,114 products (i.e., name, price, weight, image
+link)  
++ The 17,114 products were collected from 1,000 randomly chosen
+subcategories
 
 ## Collect Data from Ocado
 The 5 functions that are used to scrape different parts of the [Ocado](https://www.ocado.com) website all have the same pre-fix `oc_collect_*`. Use them in the chronological order presented below.
@@ -214,7 +232,7 @@ oc_product_review <- oc_collect_product_reviews(oc_product_general$product_link[
 oc_product_review[1:3,]
 ```
 
-Finally, it is also possible to grab the nutrition table, if it exists, associated with the products. If it does not exist, then the function returns `r NA` and moves on to the next product.  
+It is also possible to grab the nutrition table, if it exists, associated with the products. If it does not exist, then the function returns `r NA` and moves on to the next product.  
 
 ```{r oc-collect-nutrition-table}
 oc_nutrition_table <- oc_collect_nutrition_table(oc_product_general$product_link[random_product_links[1:3]])
@@ -223,7 +241,19 @@ oc_nutrition_table <- oc_collect_nutrition_table(oc_product_general$product_link
 oc_nutrition_table[1:3,]
 ```
 
-This covers the section on scraping data from the Ocado website.
+Finally, we also collected country names and flags from [worldometers](https://www.worldometers.info/geography/flags-of-the-world/). The purpose of this was to make it possible to extract the country of origin for the products on the Ocado website.  
+
+This covers the section on scraping data from the Ocado website. Here's a summary of Ocado data collected:  
++ All available categories  
++ Product details for 1,000 products (i.e., name, price, weight,
+nutrition table, ingredients, country of origin, rating, text reviews)  
++ The 1,000 products were randomly selected from 3 (of the 13)
+categories due to the large number of products available. All products
+would have taken \> 11 hours to collect (regardless of hardware) because
+the system/bot was instructured to sleep within each collector function
+to prevent overloading the website. The time would be less with parallel
+processing (i.e., opening multiple RSelenium servers at once and using
+parallel functional programming vua future package in R).
 
 ## Close Selenium Server
 ```{r close-server}
@@ -249,9 +279,9 @@ kcal <- extract_kcal(calories)
 Check the files *raw_eg_data.R* and *raw_oc_data.R* for more information on how to clean the collected data.
 
 ## Available Datasets
-What if you only want to use grocery data, without having to scrape the websites, then clean the data that was collected? Well, this package also comes with 16 build-in grocery related datasets.
+What if you only want to use grocery data, without having to scrape the websites? Well, this package also comes with 16 build-in grocery related datasets.
 
-The elGrocer and Ocado websites were partially scraped and the data collected was put into different tibbles that can be further analyzed (e.g., joined and plotted).  
+The elGrocer and Ocado websites were partially scraped, and the data collected was put into different tibbles that can be further analyzed (e.g., joined and visualized).  
 
 Datasets collected from elGrocer have the pre-fix `eg_`, while Ocados' have the pre-fix `oc_`. View the help page for each dataset for more info (e.g., `?oc_data`). Continue below to see the available datasets in this package.
 
@@ -285,7 +315,6 @@ eg_data[c(5, 10, 1000, 2000, 2005),] %>% str()
 oc_data[5006:5010,] %>% str()
 ```
 
-
 #### Grocery Store Fake Data  
 The datasets below were generated to mimic simple databases of a fake grocery store, which we will call 'funmart':  
 1. `customer_db_funmart`: customer id, name, age, household size and location (4,996 customers).  
@@ -293,8 +322,27 @@ The datasets below were generated to mimic simple databases of a fake grocery st
 3. `basket_db_funmart`: basket id, order id, products purchased in each basket and price of products. There were 200 products, with different probabilities for each, to select from in the fake grocery store, 'funmart'. Over 140,000 products were bought in all baskets combined.  
 4. `grocery_cart`: grocery dataset that was created by joining the 3 databases above.  
 
+Here's a brief overview of the data generation rules:  
++ 40% of orders are from 2020 and 60% from 2021  
++ 30% of orders are from the 1st half of the year (Jan - June) and 70% from the 2nd half of the year (Jul - Dec)  
++ The probability of shopping at each store was calculated according to
+the # of products (i.e., more products available in a store —> higher
+probability of ordering from that store).  
+The probability of ordering a product (total products = 12,539) was based on a ‘score’ metric =
+nummber of reviews for that product + % of customers that recommend it
+(i.e., higher score for a product —> higher probability of ordering that
+product).  
++ The number of products in each basket is normally distributed with a
+mean of 16 and standard deviation of 4 (minimum is 5 products/basket)  
++ 5% of orders from 00:00 to 8:00 am  
++ 20% of orders from 8:00 to 10:00 am  
++ 25% of orders from 10:00 to 12:00 pm  
++ 25% of orders from 12:00 to 6:00 pm  
++ 15% of orders from 6:00 to 10:00 pm  
++ 10% of orders from 10:00 to 12:00 am  
+
 #### Generate Your Own Grocery Store Data   
-While the 3 datasets above are available in the package, you are able to generate new grocery store data to use in your anlysis using the project associated with this package: [grocery project's Github](https://github.com/moamiristat/grocery).
+In addition to the 4 datasets above, you are able to generate new grocery store data to use in your anlysis using the project associated with this package: [grocery project's Github](https://github.com/moamiristat/grocery).
 
 ## Analyze Package Data
 A myriad of analysis can be conducted on the data in this package. Here are some ideas of what you can do:  

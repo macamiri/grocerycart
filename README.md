@@ -1,6 +1,6 @@
 # grocerycart <img src="grocerycart-hexsticker-no-background.png" align="right" height="250px" />
 
-This package was born as a means to organize the scraping & cleaning functions that were created to collect data from 2 online grocery services' websites for the [grocery Shiny app dashboard](https://github.com/moamiristat/grocery). Since then, it has evolved to include 16 different ready to use grocery related datasets that include product details, store information and even randomly generated customers/orders/baskets database for a fake grocery store.
+This package was built as a means to organize the scraping & cleaning functions that were created to collect data from 2 online grocery services' websites to be analyzed for the [grocery Shiny app dashboard](https://github.com/moamiristat/grocery). Since then, it has evolved to include 16 different ready to use grocery related datasets that include product details, store information and even randomly generated customers/orders/baskets database for a fake grocery store.
 
 Thus, the goal of the `grocerycart` package is to provide:  
 - **A suite of collection functions** that scrape data from 2 online grocery services: [elGrocer](https://www.elgrocer.com) & [Ocado](https://www.ocado.com).  
